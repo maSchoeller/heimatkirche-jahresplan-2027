@@ -1,0 +1,1441 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Heimatkirche Jahresplan 2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: ELKW klassisch, Farbwelt 01 Dunkelblau, Dichte „Lesen“; Seite = Absenderzeile, Navigationsleiste, Einleitungsband, Abschnitte, Fuß.
+   Bewusst nur helles Erscheinungsbild (Corporate Design der Landeskirche: weißer Grund). */
+
+/* ==========================================================================
+   ELKW Design – Tokens
+   Farbwelt = EINE Farbe (Schmuckfarbe 01–15 oder Violett) + neutrales Grau.
+   Quellen: Styleguide (März 2025), Moodboards, gemessen auf www.elk-wue.de.
+
+   Einbinden: Sarabun + elkw-tokens.css + elkw-components.css (+ elkw-app.css für Anwendungen)
+   <html class="elkw" data-farbwelt="08">        Farbwelt 01–15 oder "violett" (Standard: 01 Dunkelblau)
+   <html data-stil="gemeinde">                    Ecken 12/6/8 px (Standard: eckig)
+   <html data-dichte="arbeiten">                  kompakte Dichte für Anwendungen
+   ========================================================================== */
+
+:root {
+  /* --- Schrift (Dichte „Lesen“, gemessen elk-wue.de) --- */
+  --elkw-font: "Sarabun", Arial, sans-serif;
+  --elkw-fs: 1.125rem;                /* 18 px */
+  --elkw-lh: 1.85rem;
+  --elkw-fs-h1: 200%;  --elkw-lh-h1: 2.75rem;
+  --elkw-fs-h2: 150%;  --elkw-lh-h2: 2.25rem;
+  --elkw-fs-h3: 135%;
+  --elkw-fs-h4: 120%;
+  --elkw-fs-small: 0.8rem;
+  --elkw-fs-nav-sub: 96%;
+  --elkw-control-h: 41px;             /* Eingabefelder */
+  --elkw-btn-pad: 0.5rem 1.5rem;
+  --elkw-cell-pad: 0.5rem;
+
+  /* --- Feste Farben --- */
+  --elkw-text: #000000;
+  --elkw-white: #FFFFFF;
+  --elkw-violett: #8D197C;            /* Hausfarbe: Logo, Farbwelt „violett“ */
+  --elkw-dunkelviolett: #591855;
+  --elkw-dunkelgrau: #474F60;         /* Grundfarbe, neutrale Trägerfarbe */
+
+  /* Neutrales Grau aus Dunkelgrau-Abstufungen (Styleguide 10–100 %) – in jeder Farbwelt gleich */
+  --elkw-neutral-10: #EDEDEF;         /* Hover, ruhige Hintergründe in Anwendungen */
+  --elkw-light: #D8DBDE;              /* ≈ 20 %, gemessen elk-wue.de: Panels, Reiter, Auswahl, Fußleiste */
+  --elkw-neutral-40: #B5B9BF;         /* Trenner auf Grau, deaktivierte Rahmen */
+  --elkw-neutral-60: #9195A0;
+  --elkw-dark: var(--elkw-dunkelgrau);
+  --elkw-on-dark: #FFFFFF;
+  --elkw-border: #868686;             /* Card-Rahmen, Trennlinien */
+  --elkw-table-border: #CCCCCC;
+  --elkw-table-head: #EEEEEE;
+  --elkw-dateblock-bottom: var(--elkw-dunkelgrau);
+  --elkw-overlay: rgba(200, 200, 200, 0.7);   /* Dialog-Hintergrund (gemessen) */
+  --elkw-dialog: #D8D8D8;                     /* Dialogfläche (gemessen) */
+
+  /* Statusfarben (Anwendungen): Schmuckfarben, nur als Balken/Markierung – Bedeutung immer auch als Wort */
+  --elkw-status-fehler: #B61231;      /* 14 Rot */
+  --elkw-status-warnung: #DC9018;     /* 12 Orange */
+  --elkw-status-erfolg: #518471;      /* 08 Dunkelgrün */
+  --elkw-status-hinweis: var(--elkw-action);
+  --elkw-error: #FF0000;              /* Feldfehler wie elk-wue.de */
+
+  /* Grundfarben-Abstufungen für Druck */
+  --elkw-dunkelviolett-80: #7A4677; --elkw-dunkelviolett-60: #9B7499; --elkw-dunkelviolett-40: #BDA3BB; --elkw-dunkelviolett-20: #DED1DD;
+  --elkw-dunkelgrau-80: #6C7280;    --elkw-dunkelgrau-60: #9195A0;    --elkw-dunkelgrau-40: #B5B9BF;    --elkw-dunkelgrau-20: #DADCDF;
+
+  /* --- Raster --- */
+  --elkw-container: 1310px;
+  --elkw-gutter: 1rem;
+  --elkw-space-xs: 0.5rem;
+  --elkw-space-s: 1rem;
+  --elkw-space-m: 1.5rem;
+  --elkw-space-l: 2rem;
+  --elkw-space-xl: 4rem;
+  --elkw-section: 3rem;               /* Abstand zwischen Abschnitten ohne Band */
+  --elkw-gap: 24px;
+  --elkw-gap-tiles: 25px;
+  --elkw-header-pad: 16px;
+  --elkw-logo-h: 60px;
+
+  --elkw-radius: 0px;
+  --elkw-radius-btn: 0px;
+  --elkw-radius-input: 0px;
+
+  --elkw-transition: background-color 0.3s, color 0.3s, border-color 0.3s, left 0.3s;   /* Hover wie elk-wue.de (0,3 s), ohne Fokus-Rahmen zu animieren */
+  --elkw-focus: #000000;              /* Tastaturfokus 2 px, 4 px Abstand (elk-wue.de) */
+  --elkw-focus-on-color: #FFFF00;     /* auf farbigen Flächen (elk-wue.de) */
+  --elkw-line-on-light: var(--elkw-neutral-40);   /* Trennlinie auf grauen Flächen */
+  --elkw-box-pad: 2rem;               /* Infobox */
+  --elkw-panel-pad: 18px 32px 32px;   /* Panel */
+  --elkw-panel-title-gap: 28.8px;     /* Abstand unter Panel-Titel */
+  --elkw-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M1 7h11.2L8.3 3.1 9.7 1.7 16 8l-6.3 6.3-1.4-1.4L12.2 9H1z'/%3E%3C/svg%3E");
+}
+
+/* Stil: klassisch (Standard, eckig) · gemeinde (klassisch mit Baukasten-Rundungen) · nahbar (elkw-nahbar.css) */
+[data-stil="gemeinde"], [data-stil="nahbar"] { --elkw-radius: 12px; --elkw-radius-btn: 6px; --elkw-radius-input: 8px; }
+
+/* Dichte „Arbeiten“ für Anwendungen */
+[data-dichte="arbeiten"] {
+  --elkw-fs: 1rem;                    /* 16 px */
+  --elkw-lh: 1.5rem;
+  --elkw-fs-h1: 1.5rem;  --elkw-lh-h1: 2rem;
+  --elkw-fs-h2: 1.25rem; --elkw-lh-h2: 1.75rem;
+  --elkw-fs-h3: 1.125rem;
+  --elkw-fs-h4: 1rem;
+  --elkw-fs-small: 0.8125rem;
+  --elkw-control-h: 36px;
+  --elkw-btn-pad: 0.3rem 1rem;
+  --elkw-cell-pad: 0.4rem 0.6rem;
+  --elkw-space-m: 1rem;
+  --elkw-space-l: 1.5rem;
+  --elkw-space-xl: 2rem;
+  --elkw-section: 1.5rem;
+  --elkw-gap: 16px;
+  --elkw-header-pad: 8px;
+  --elkw-logo-h: 36px;
+  --elkw-box-pad: 1.25rem;
+  --elkw-panel-pad: 12px 20px 20px;
+  --elkw-panel-title-gap: 12px;
+}
+
+/* BEGIN FARBWELTEN (generiert von scripts/make-farbwelt.py --write-presets) */
+/* 01 Dunkelblau – kräftig, Band 40 % */
+:root {
+  --elkw-primary: #29447B;
+  --elkw-action: #29447B;
+  --elkw-akzent: #29447B;
+  --elkw-akzent-80: #546995;
+  --elkw-akzent-60: #7F8FB0;
+  --elkw-akzent-40: #A9B4CA;
+  --elkw-akzent-20: #D4DAE5;
+  --elkw-akzent-10: #EAECF2;
+  --elkw-contrast: #A9B4CA;
+  --elkw-band-title: #29447B;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 01 Dunkelblau – kräftig, Band 40 % */
+[data-farbwelt="01"] {
+  --elkw-primary: #29447B;
+  --elkw-action: #29447B;
+  --elkw-akzent: #29447B;
+  --elkw-akzent-80: #546995;
+  --elkw-akzent-60: #7F8FB0;
+  --elkw-akzent-40: #A9B4CA;
+  --elkw-akzent-20: #D4DAE5;
+  --elkw-akzent-10: #EAECF2;
+  --elkw-contrast: #A9B4CA;
+  --elkw-band-title: #29447B;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 02 Taubenblau – kräftig, Band 60 % */
+[data-farbwelt="02"] {
+  --elkw-primary: #6C759A;
+  --elkw-action: #6C759A;
+  --elkw-akzent: #707AA0;
+  --elkw-akzent-80: #8D95B3;
+  --elkw-akzent-60: #A9AFC6;
+  --elkw-akzent-40: #C6CAD9;
+  --elkw-akzent-20: #E2E4EC;
+  --elkw-akzent-10: #F1F2F6;
+  --elkw-contrast: #A9AFC6;
+  --elkw-band-title: #000000;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 03 Hellblau – hell, Band 60 % */
+[data-farbwelt="03"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #5EB3D2;
+  --elkw-akzent-80: #7EC2DB;
+  --elkw-akzent-60: #9ED1E4;
+  --elkw-akzent-40: #BFE1ED;
+  --elkw-akzent-20: #DFF0F6;
+  --elkw-akzent-10: #EFF7FA;
+  --elkw-contrast: #9ED1E4;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #000000;
+  --elkw-on-contrast: #000000;
+}
+
+/* 04 Graublau – hell, Band 60 % */
+[data-farbwelt="04"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #6290B1;
+  --elkw-akzent-80: #81A6C1;
+  --elkw-akzent-60: #A1BCD0;
+  --elkw-akzent-40: #C0D3E0;
+  --elkw-akzent-20: #E0E9EF;
+  --elkw-akzent-10: #EFF4F7;
+  --elkw-contrast: #A1BCD0;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 05 Pastellviolett – hell, Band 60 % */
+[data-farbwelt="05"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #988FA0;
+  --elkw-akzent-80: #ADA5B3;
+  --elkw-akzent-60: #C1BCC6;
+  --elkw-akzent-40: #D6D2D9;
+  --elkw-akzent-20: #EAE9EC;
+  --elkw-akzent-10: #F5F4F6;
+  --elkw-contrast: #C1BCC6;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #000000;
+  --elkw-on-contrast: #000000;
+}
+
+/* 06 Gelbgrün – hell, Band 60 % */
+[data-farbwelt="06"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #C9D229;
+  --elkw-akzent-80: #D4DB54;
+  --elkw-akzent-60: #DFE47F;
+  --elkw-akzent-40: #E9EDA9;
+  --elkw-akzent-20: #F4F6D4;
+  --elkw-akzent-10: #FAFAEA;
+  --elkw-contrast: #DFE47F;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #000000;
+  --elkw-on-contrast: #000000;
+}
+
+/* 07 Hellgrün – hell, Band 60 % */
+[data-farbwelt="07"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #A3B37A;
+  --elkw-akzent-80: #B5C295;
+  --elkw-akzent-60: #C8D1AF;
+  --elkw-akzent-40: #DAE1CA;
+  --elkw-akzent-20: #EDF0E4;
+  --elkw-akzent-10: #F6F7F2;
+  --elkw-contrast: #C8D1AF;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #000000;
+  --elkw-on-contrast: #000000;
+}
+
+/* 08 Dunkelgrün – kräftig, Band 60 % */
+[data-farbwelt="08"] {
+  --elkw-primary: #4F806E;
+  --elkw-action: #4F806E;
+  --elkw-akzent: #518471;
+  --elkw-akzent-80: #749D8D;
+  --elkw-akzent-60: #97B5AA;
+  --elkw-akzent-40: #B9CEC6;
+  --elkw-akzent-20: #DCE6E3;
+  --elkw-akzent-10: #EEF3F1;
+  --elkw-contrast: #97B5AA;
+  --elkw-band-title: #000000;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 09 Blaugrün – kräftig, Band 60 % */
+[data-farbwelt="09"] {
+  --elkw-primary: #307F91;
+  --elkw-action: #307F91;
+  --elkw-akzent: #318294;
+  --elkw-akzent-80: #5A9BA9;
+  --elkw-akzent-60: #83B4BF;
+  --elkw-akzent-40: #ADCDD4;
+  --elkw-akzent-20: #D6E6EA;
+  --elkw-akzent-10: #EAF2F4;
+  --elkw-contrast: #83B4BF;
+  --elkw-band-title: #000000;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 10 Türkis – kräftig, Band 60 % */
+[data-farbwelt="10"] {
+  --elkw-primary: #258194;
+  --elkw-action: #258194;
+  --elkw-akzent: #298FA5;
+  --elkw-akzent-80: #54A5B7;
+  --elkw-akzent-60: #7FBCC9;
+  --elkw-akzent-40: #A9D2DB;
+  --elkw-akzent-20: #D4E9ED;
+  --elkw-akzent-10: #EAF4F6;
+  --elkw-contrast: #7FBCC9;
+  --elkw-band-title: #000000;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 11 Gelb – hell, Band 60 % */
+[data-farbwelt="11"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #F5D403;
+  --elkw-akzent-80: #F7DD35;
+  --elkw-akzent-60: #F9E568;
+  --elkw-akzent-40: #FBEE9A;
+  --elkw-akzent-20: #FDF6CD;
+  --elkw-akzent-10: #FEFBE6;
+  --elkw-contrast: #F9E568;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #000000;
+  --elkw-on-contrast: #000000;
+}
+
+/* 12 Orange – hell, Band 60 % */
+[data-farbwelt="12"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #DC9018;
+  --elkw-akzent-80: #E3A646;
+  --elkw-akzent-60: #EABC74;
+  --elkw-akzent-40: #F1D3A3;
+  --elkw-akzent-20: #F8E9D1;
+  --elkw-akzent-10: #FCF4E8;
+  --elkw-contrast: #EABC74;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #000000;
+  --elkw-on-contrast: #000000;
+}
+
+/* 13 Apricot – hell, Band 60 % */
+[data-farbwelt="13"] {
+  --elkw-primary: #474F60;
+  --elkw-action: #474F60;
+  --elkw-akzent: #CB957D;
+  --elkw-akzent-80: #D5AA97;
+  --elkw-akzent-60: #E0BFB1;
+  --elkw-akzent-40: #EAD5CB;
+  --elkw-akzent-20: #F5EAE5;
+  --elkw-akzent-10: #FAF4F2;
+  --elkw-contrast: #E0BFB1;
+  --elkw-band-title: #474F60;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #000000;
+  --elkw-on-contrast: #000000;
+}
+
+/* 14 Rot – kräftig, Band 40 % */
+[data-farbwelt="14"] {
+  --elkw-primary: #B61231;
+  --elkw-action: #B61231;
+  --elkw-akzent: #B61231;
+  --elkw-akzent-80: #C5415A;
+  --elkw-akzent-60: #D37183;
+  --elkw-akzent-40: #E2A0AD;
+  --elkw-akzent-20: #F0D0D6;
+  --elkw-akzent-10: #F8E7EA;
+  --elkw-contrast: #E2A0AD;
+  --elkw-band-title: #B61231;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* 15 Dunkelrot – kräftig, Band 40 % */
+[data-farbwelt="15"] {
+  --elkw-primary: #9C2049;
+  --elkw-action: #9C2049;
+  --elkw-akzent: #9C2049;
+  --elkw-akzent-80: #B04D6D;
+  --elkw-akzent-60: #C47992;
+  --elkw-akzent-40: #D7A6B6;
+  --elkw-akzent-20: #EBD2DB;
+  --elkw-akzent-10: #F5E9ED;
+  --elkw-contrast: #D7A6B6;
+  --elkw-band-title: #9C2049;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+
+/* Violett (Hausfarbe) – violett, Band 60 % */
+[data-farbwelt="violett"] {
+  --elkw-primary: #591855;
+  --elkw-action: #8D197C;
+  --elkw-akzent: #8D197C;
+  --elkw-akzent-80: #7A4677;
+  --elkw-akzent-60: #9B7499;
+  --elkw-akzent-40: #BDA3BB;
+  --elkw-akzent-20: #DED1DD;
+  --elkw-akzent-10: #EEE8EE;
+  --elkw-contrast: #9B7499;
+  --elkw-band-title: #591855;
+  --elkw-on-primary: #FFFFFF;
+  --elkw-on-action: #FFFFFF;
+  --elkw-on-akzent: #FFFFFF;
+  --elkw-on-contrast: #000000;
+}
+/* END FARBWELTEN */
+
+
+/* ==========================================================================
+   ELKW Design – Komponentenbibliothek (Websites und Anwendungen)
+   Bausteine nach www.elk-wue.de bzw. Styleguide; Maße gemessen.
+   Beschreibung: references/components.md · Live-Ansicht: assets/components.html
+   Benötigt elkw-tokens.css. Farben nur über Rollen-Variablen, nie fest.
+   ========================================================================== */
+
+/* ---------- Grundlagen ---------- */
+.elkw, .elkw body {
+  margin: 0;
+  font-family: var(--elkw-font);
+  font-size: var(--elkw-fs);
+  line-height: var(--elkw-lh);
+  color: var(--elkw-text);
+  background: var(--elkw-white);
+}
+.elkw *, .elkw *::before, .elkw *::after { box-sizing: border-box; }
+.elkw h1, .elkw h2, .elkw h3, .elkw h4, .elkw h5 { font-weight: 700; hyphens: manual; overflow-wrap: break-word; text-wrap: balance; }   /* Überschriften nicht automatisch trennen */
+.elkw h1 strong, .elkw h1 b, .elkw h2 strong, .elkw h2 b { font-weight: 700; }   /* kein „bolder“ = 900, den Sarabun nicht hat */
+.elkw h1 { font-size: var(--elkw-fs-h1); line-height: var(--elkw-lh-h1); margin: 0 0 var(--elkw-space-l); }
+.elkw h2 { font-size: var(--elkw-fs-h2); line-height: var(--elkw-lh-h2); }
+.elkw h3 { font-size: var(--elkw-fs-h3); }
+.elkw h4 { font-size: var(--elkw-fs-h4); }
+.elkw p, .elkw td, .elkw li { hyphens: auto; overflow-wrap: break-word; }
+.elkw img { max-width: 100%; }
+.elkw .h-primary { color: var(--elkw-primary); }
+.elkw .h-action  { color: var(--elkw-action); }
+.elkw .text-center { text-align: center; }
+.elkw .small { font-size: var(--elkw-fs-small); line-height: 1.5; }
+.elkw .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.elkw [hidden] { display: none !important; }   /* hidden gilt auch für Bausteine mit eigener display-Regel */
+/* Sprunglink: erstes Element im body, erscheint bei Tastaturfokus */
+.elkw-skiplink { position: absolute; left: 1rem; top: -100px; z-index: 1000; padding: 0.5rem 1rem; background: var(--elkw-white); color: var(--elkw-text); border: 1px solid var(--elkw-text); }
+.elkw-skiplink:focus { top: 1rem; }
+/* Überschrift, die nach einem Ansichtswechsel den Fokus bekommt (tabindex="-1") */
+.elkw [tabindex="-1"]:focus { outline: none; }
+
+/* Tastaturfokus (elk-wue.de: 2 px schwarz, 4 px Abstand; auf farbigen Flächen gelb) */
+.elkw :focus-visible { outline: 2px solid var(--elkw-focus); outline-offset: 4px; }
+.elkw .elkw-header :focus-visible, .elkw .elkw-footer__main :focus-visible,
+.elkw .elkw-bg-1 :focus-visible, .elkw .elkw-bg-3 :focus-visible { outline-color: var(--elkw-focus-on-color); }
+
+/* ---------- Layout ---------- */
+.elkw-container { max-width: var(--elkw-container); margin: 0 auto; padding: 0 var(--elkw-gutter); }
+.elkw-section    { padding: var(--elkw-section) 0; }          /* Abschnitt ohne Farbfläche */
+.elkw-grid-main  { display: grid; grid-template-columns: 2fr 1fr; gap: var(--elkw-gap); align-items: start; }
+.elkw-grid-2     { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--elkw-gap); }
+.elkw-grid-3     { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--elkw-gap); }
+.elkw-grid-4     { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--elkw-gap-tiles); }
+.elkw-grid-main > *, .elkw-grid-2 > *, .elkw-grid-3 > *, .elkw-grid-4 > * { min-width: 0; }
+.elkw-measure    { max-width: 75ch; }
+.elkw-stack > * + * { margin-top: var(--elkw-space-m); }
+
+/* ---------- Flächen und Bänder ---------- */
+.elkw-bg-0 { background: var(--elkw-white);    color: var(--elkw-text); }
+.elkw-bg-1 { background: var(--elkw-primary);  color: var(--elkw-on-primary); }
+.elkw-bg-2 { background: var(--elkw-light);    color: var(--elkw-text); }
+.elkw-bg-3 { background: var(--elkw-dark);     color: var(--elkw-on-dark); }
+.elkw-bg-4 { background: var(--elkw-contrast); color: var(--elkw-on-contrast); }
+.elkw-bg-1 a:not(.elkw-btn), .elkw-bg-3 a:not(.elkw-btn) { color: inherit; }
+.elkw-band { padding: var(--elkw-space-xl) 0; }
+.elkw-band--intro { padding: 1.5rem 0; text-align: center; }
+.elkw-band__title { color: var(--elkw-band-title); }
+.elkw-band--intro .elkw-band__title { font-size: var(--elkw-fs-h3); line-height: var(--elkw-lh); margin: 1.5rem 0 1rem; }
+.elkw-band--intro p { margin: 0 0 1.5rem; }
+.elkw-section-title { text-align: center; color: var(--elkw-action); font-size: var(--elkw-fs-h2); line-height: var(--elkw-lh-h2); margin: 0 0 var(--elkw-space-l); }
+
+/* ---------- Links ---------- */
+.elkw-link, .elkw main a:not([class]):not(nav a):not(.elkw-header a) {
+  color: var(--elkw-action); text-decoration: none; border-bottom: 1px solid; transition: var(--elkw-transition);
+}
+.elkw-link:hover, .elkw main a:not([class]):not(nav a):not(.elkw-header a):hover { border-bottom-style: dashed; }
+
+/* ---------- Buttons (Pfeil = führt weiter; --noarrow = Aktion an Ort und Stelle) ---------- */
+.elkw-btn {
+  display: inline-flex; align-items: center; gap: 0.85rem;
+  padding: var(--elkw-btn-pad); margin: 0.25rem 0;
+  border: 1px solid transparent; border-radius: var(--elkw-radius-btn);
+  background: var(--elkw-action); color: var(--elkw-on-action);
+  font: inherit; line-height: var(--elkw-lh); text-align: left; text-decoration: none; white-space: nowrap;
+  cursor: pointer; transition: var(--elkw-transition);
+}
+.elkw-btn::after {
+  content: ""; flex: none; position: relative; left: 0;
+  width: 0.9em; height: 0.9em; background: currentColor;
+  -webkit-mask: var(--elkw-arrow) center / contain no-repeat; mask: var(--elkw-arrow) center / contain no-repeat;
+  transition: var(--elkw-transition);
+}
+.elkw-btn:hover::after { left: 0.15rem; }
+.elkw-btn--outline  { background: transparent; color: var(--elkw-text); border-color: var(--elkw-primary); }
+.elkw-btn--contrast { background: var(--elkw-contrast); color: var(--elkw-on-contrast); }
+.elkw-btn--light    { background: var(--elkw-light); color: var(--elkw-text); border-color: var(--elkw-text); }
+.elkw-btn--text     { background: transparent; color: var(--elkw-action); padding-left: 0; padding-right: 0; }  /* App-Ergänzung: tertiär */
+.elkw-btn--on-same  { border-color: var(--elkw-white); }
+.elkw-btn--block    { display: flex; width: 100%; justify-content: space-between; white-space: normal; }
+.elkw-btn--noarrow::after { content: none; }
+.elkw-btn:disabled, .elkw-btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+.elkw-actions { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
+
+/* ---------- Kopf (zweigeteilt): weiße Absenderzeile + farbige Navigationsleiste ---------- */
+/* Absenderzeile: offizielles Logo auf Weiß (Styleguide-Regelfall), rechts Metanavigation/Burger */
+.elkw-brandbar { background: var(--elkw-white); padding: var(--elkw-header-pad) 0; }
+.elkw-brandbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.elkw-brandbar__logo { display: block; color: var(--elkw-text); text-decoration: none; }
+.elkw-brandbar__logo img { display: block; height: var(--elkw-logo-h); width: auto; }
+.elkw-meta ul { display: flex; justify-content: flex-end; gap: 2rem; margin: 0; padding: 0; list-style: none; font-size: var(--elkw-fs-small); }
+.elkw-meta a { color: var(--elkw-text); text-decoration: none; }
+/* Navigationsleiste in der Trägerfarbe */
+.elkw-header { position: relative; background: var(--elkw-primary); color: var(--elkw-on-primary); }
+.elkw-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 3.25rem; }
+.elkw-nav > ul { display: flex; flex-wrap: wrap; gap: 0 2rem; margin: 0; padding: 0; list-style: none; }
+.elkw-nav a { display: block; padding: 0.75rem 0; color: var(--elkw-on-primary); text-decoration: none; border-bottom: 1px solid transparent; }
+.elkw-nav a[aria-current] { border-bottom-color: currentColor; }
+.elkw-nav li { position: relative; }
+.elkw-submenu { display: none; position: absolute; left: 0; top: 100%; z-index: 20; min-width: 16rem; margin: 0; padding: 16px 4px 16px 16px; list-style: none; background: var(--elkw-primary); }
+.elkw-nav li:hover > .elkw-submenu, .elkw-nav li:focus-within > .elkw-submenu { display: block; }
+.elkw-submenu a { padding: 0 0 0.65rem; font-size: var(--elkw-fs-nav-sub); border: 0; }
+.elkw-burger { display: none; background: none; border: 0; padding: 0.5rem; color: var(--elkw-text); cursor: pointer; }
+.elkw-burger span { display: block; width: 28px; height: 3px; margin: 5px 0; background: currentColor; }
+
+/* ---------- Wortmarke: Proportionen der offiziellen Bild-Wort-Marke ---------- */
+/* --d = Kreisdurchmesser. Abstand ¼ d, Schrift 0,262 d, Zeilenabstand 1,19, Zeile 1 SemiBold, Zeile 2 Light. */
+.elkw-wordmark { --d: var(--elkw-logo-h); display: inline-flex; align-items: center; gap: calc(var(--d) * 0.25); color: inherit; text-decoration: none; }
+.elkw-wordmark img { width: var(--d); height: var(--d); display: block; }
+.elkw-wordmark span { display: block; font-size: calc(var(--d) * 0.262); line-height: 1.19; white-space: nowrap; }
+.elkw-wordmark .l1 { font-weight: 600; }
+.elkw-wordmark .l2 { font-weight: 300; }
+
+/* ---------- Bildkachel ---------- */
+.elkw-tile { display: flex; flex-direction: column; min-height: 600px; border-radius: var(--elkw-radius); overflow: hidden; color: inherit; text-decoration: none; border: 0; }
+.elkw-tile .elkw-photo { flex: 1; }
+.elkw-tile__label { background: var(--elkw-primary); color: var(--elkw-on-primary); padding: 24px 16px; font-size: var(--elkw-fs-h4); line-height: var(--elkw-lh); min-height: 89px; }
+
+/* ---------- Card ---------- */
+.elkw-card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--elkw-border); border-radius: var(--elkw-radius); overflow: hidden; background: var(--elkw-white); }
+.elkw-card > .elkw-photo { aspect-ratio: 3 / 2; }
+.elkw-card__body { padding: 16px 32px; flex: 1; }
+.elkw-card__title { margin: 1.5rem 0; padding-bottom: 0.75rem; line-height: 1.5; font-size: var(--elkw-fs-h3); color: var(--elkw-text); }
+.elkw-card__body > .elkw-kicker:first-child { margin-top: 1.5rem; }
+.elkw-card__body > .elkw-kicker + .elkw-card__title { margin-top: 0.25rem; }
+.elkw-card__footer { padding: 0 2rem 2rem; }
+
+/* ---------- Infobox und Panel ---------- */
+.elkw-infobox { border: 1px solid var(--elkw-primary); background: var(--elkw-white); padding: var(--elkw-box-pad); border-radius: var(--elkw-radius); }
+.elkw-infobox__title { margin: 0 0 1rem; color: var(--elkw-primary); font-size: var(--elkw-fs-h4); }
+.elkw-panel { background: var(--elkw-light); padding: var(--elkw-panel-pad); border-radius: var(--elkw-radius); }
+.elkw-panel__title { color: var(--elkw-action); font-size: var(--elkw-fs-h4); margin: 8px 0 var(--elkw-panel-title-gap); }
+.elkw-panel hr, .elkw-panel .elkw-divider { border: 0; border-top: 1px solid var(--elkw-line-on-light); margin: 1rem 0; }
+
+/* ---------- Linkliste ---------- */
+.elkw-linklist { display: flex; flex-direction: column; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.elkw-linklist .elkw-btn { display: flex; width: 100%; justify-content: space-between; margin: 0; white-space: normal; }
+
+/* ---------- Terminliste (Datumsblock + Text) ---------- */
+.elkw-eventlist { margin: 0; padding: 0; list-style: none; }
+.elkw-eventlist > li { display: flex; gap: var(--elkw-space-m); align-items: flex-start; padding: var(--elkw-space-m) 0; border-bottom: 1px solid var(--elkw-border); }
+.elkw-eventlist > li:first-child { padding-top: 0; }
+.elkw-eventlist > li:last-child { border-bottom: 0; padding-bottom: 0; }
+.elkw-eventlist__body { min-width: 0; }
+.elkw-eventlist__body h3, .elkw-eventlist__body h4 { margin: 0 0 0.25rem; }
+
+/* ---------- Reiter ---------- */
+.elkw-tabs { display: flex; flex-wrap: wrap; gap: 0 2px; margin: 0; padding: 2px 2px 0; list-style: none; background: var(--elkw-light); }
+.elkw-tabs button, .elkw-tabs a { display: block; padding: var(--elkw-btn-pad); border: 0; background: transparent; color: var(--elkw-primary); font: inherit; text-decoration: none; cursor: pointer; transition: var(--elkw-transition); }
+.elkw-tabs button:hover, .elkw-tabs a:hover { background: var(--elkw-white); }
+.elkw-tabs [aria-selected="true"], .elkw-tabs .active { color: var(--elkw-text); background: var(--elkw-white); font-weight: 600; }   /* zweites Merkmal neben der Farbe */
+
+/* ---------- Aufklapp (gemessen: 1 px schwarz, Kopfzeile weiß, +/−) ---------- */
+.elkw-accordion details { border: 1px solid var(--elkw-text); margin: -1px 0 0; background: var(--elkw-white); }
+.elkw-accordion details:first-child { margin-top: 0; }
+.elkw-accordion summary { display: flex; justify-content: space-between; gap: 1rem; padding: 1.15rem; cursor: pointer; list-style: none; background: var(--elkw-white); color: var(--elkw-text); font-weight: 400; }
+.elkw-accordion summary::-webkit-details-marker { display: none; }
+.elkw-accordion summary::after { content: "+"; font-weight: 700; }
+.elkw-accordion details[open] summary::after { content: "−"; }
+.elkw-accordion .elkw-accordion__content { padding: 2rem 1.15rem; background: var(--elkw-white); }
+
+/* ---------- Dialog (gemessen: Einwilligungsdialog elk-wue.de) ---------- */
+.elkw-dialog { border: 1px solid var(--elkw-border); padding: 18px; max-width: 1100px; width: calc(100% - 2rem); background: var(--elkw-dialog); color: var(--elkw-text); border-radius: var(--elkw-radius); }
+.elkw-dialog::backdrop { background: var(--elkw-overlay); }
+.elkw-dialog__title { display: block; margin: 0 0 0.5rem; line-height: var(--elkw-lh); font-size: var(--elkw-fs-h4); font-weight: 700; color: var(--elkw-primary); }
+.elkw-dialog p { margin: 0; }
+.elkw-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem 1rem; margin-top: 1rem; }
+.elkw-dialog--bottom { margin: auto auto 0; }
+.elkw-dialog--center { max-width: 640px; }
+
+/* ---------- Formular ---------- */
+.elkw-field { display: block; }
+.elkw-field label, .elkw-label { display: block; font-size: var(--elkw-fs-small); margin-bottom: 0.25rem; }
+.elkw-field .elkw-hint { display: block; font-size: var(--elkw-fs-small); margin-top: 0.25rem; }
+.elkw input[type=text], .elkw input[type=email], .elkw input[type=number], .elkw input[type=date], .elkw input[type=password],
+.elkw input[type=search], .elkw input[type=tel], .elkw input[type=time], .elkw input[type=url], .elkw select {
+  width: 100%; height: var(--elkw-control-h); padding: 0 1rem;
+  border: 1px solid var(--elkw-action); border-radius: var(--elkw-radius-input);
+  background: var(--elkw-white); color: var(--elkw-text); font: inherit; font-size: 100%; line-height: 1.4;
+}
+.elkw textarea { width: 100%; height: 150px; padding: 0.5rem 1rem; border: 1px solid var(--elkw-action); border-radius: var(--elkw-radius-input); font: inherit; }
+.elkw input[type=checkbox], .elkw input[type=radio] { accent-color: var(--elkw-action); width: 1.1em; height: 1.1em; }
+.elkw input:disabled, .elkw select:disabled, .elkw textarea:disabled { border-color: var(--elkw-neutral-40); background: var(--elkw-neutral-10); cursor: not-allowed; }
+.elkw .error, .elkw [aria-invalid="true"] { border-color: var(--elkw-error) !important; background: rgba(255, 0, 0, 0.1) !important; }
+.elkw-required::after { content: " *"; color: var(--elkw-action); }
+.elkw-field-error { display: block; font-size: var(--elkw-fs-small); margin-top: 0.25rem; font-weight: 600; }
+.elkw-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem 1.5rem; align-items: start; }
+
+/* ---------- Tabelle ---------- */
+.elkw table, .elkw-table { width: 100%; border-collapse: collapse; border: 1px solid var(--elkw-table-border); }
+.elkw th, .elkw td { border: 1px solid var(--elkw-table-border); padding: var(--elkw-cell-pad); text-align: left; vertical-align: top; }
+.elkw thead th { background: var(--elkw-table-head); font-weight: 400; }
+.elkw-table-wrap { overflow-x: auto; }
+.elkw-table--select tbody tr { transition: var(--elkw-transition); }
+.elkw-table--select tbody tr:hover { background: var(--elkw-neutral-10); }
+.elkw-table tbody tr[aria-selected="true"] { background: var(--elkw-light); }
+@media (max-width: 640px) {
+  .elkw-table--stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .elkw-table--stack, .elkw-table--stack tbody, .elkw-table--stack tr, .elkw-table--stack td { display: block; width: 100%; border: 0; }
+  .elkw-table--stack tr { border-bottom: 1px solid var(--elkw-table-border); padding: 0.5rem 0; }
+  .elkw-table--stack td { padding: 0.1rem 0; }
+  .elkw-table--stack td:first-child { font-weight: 700; }
+  .elkw-table--stack td[data-label]::before { content: attr(data-label) ": "; font-weight: 600; }   /* Spaltenname vor dem Wert */
+}
+
+/* ---------- Fuß ---------- */
+.elkw-footer { font-size: var(--elkw-fs-nav-sub); }
+.elkw-footer__main { background: var(--elkw-primary); color: var(--elkw-on-primary); padding: 3rem 0; }
+.elkw-footer__main a { color: inherit; }
+.elkw-footer__main p { margin: 0 0 1rem; }
+.elkw-footer__legal { background: var(--elkw-light); color: var(--elkw-text); }
+.elkw-footer__legal ul { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; margin: 0; padding: 1rem 0; list-style: none; }
+.elkw-footer__legal a { color: var(--elkw-text); text-decoration: none; }
+
+/* ---------- Foto / Platzhalter ---------- */
+.elkw-photo { display: flex; align-items: center; justify-content: center; padding: 1rem; background: var(--elkw-light); color: var(--elkw-dunkelgrau); font-size: var(--elkw-fs-small); text-align: center; overflow: hidden; }
+.elkw-photo:has(img) { padding: 0; }
+.elkw-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- Akzente der Farbwelt (sparsam, flächig) ---------- */
+.elkw-bar { display: block; flex: none; width: 3mm; min-height: 22mm; background: var(--elkw-akzent); }
+.elkw-kicker { text-transform: uppercase; letter-spacing: 0.06em; font-size: var(--elkw-fs-small); margin: 0 0 0.25rem; }
+.elkw-dateblock { display: inline-flex; flex: none; flex-direction: column; width: 5.5rem; text-align: center; font-weight: 300; line-height: 1.05; }
+.elkw-dateblock__top { background: var(--elkw-akzent); color: var(--elkw-on-akzent); padding: 0.6rem 0 0.5rem; }
+.elkw-dateblock__bottom { background: var(--elkw-dateblock-bottom); color: #FFFFFF; padding: 0.5rem 0; margin-top: 2px; font-size: 1.6rem; }
+.elkw-dateblock .wd { font-size: 1.2rem; } .elkw-dateblock .day { font-size: 2.2rem; } .elkw-dateblock .mon { font-size: 0.75rem; margin-top: 0.3rem; }
+.elkw-dateblock--small { width: 4.25rem; }
+.elkw-dateblock--small .wd { font-size: 0.95rem; } .elkw-dateblock--small .day { font-size: 1.6rem; } .elkw-dateblock--small .elkw-dateblock__bottom { font-size: 1.1rem; }
+
+/* ---------- Fläche (weiße Karte für Inhaltsblöcke, v. a. in Anwendungen) ---------- */
+.elkw-surface { background: var(--elkw-white); border: 1px solid var(--elkw-border); border-radius: var(--elkw-radius); padding: var(--elkw-box-pad); }
+.elkw-surface > h2:first-child, .elkw-surface > h3:first-child { margin-top: 0; font-size: var(--elkw-fs-h3); }
+.elkw-grid-wide { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: var(--elkw-gap); align-items: start; }
+
+/* ---------- Begrüßung / Seitenkopf mit Satz ---------- */
+.elkw-hello { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: var(--elkw-space-l); }
+.elkw-hello h1 { margin: 0; }
+.elkw-hello p { margin: 0.25rem 0 0; }
+
+/* ---------- Wort (Zitat, Bibelvers, Leitsatz) – nach dem Zitatstil der Moodboards ---------- */
+.elkw-word { position: relative; margin: 0 0 var(--elkw-gap); padding: 1.5rem 1.5rem 1.5rem 2.75rem; background: var(--elkw-contrast); color: var(--elkw-on-contrast); border-radius: var(--elkw-radius); }
+.elkw-word::before { content: "\201D"; position: absolute; left: 0.9rem; top: 0.4rem; font-size: 3rem; font-weight: 700; line-height: 1; color: var(--elkw-band-title); }
+.elkw-word blockquote, .elkw-word > p { margin: 0; font-size: 1.15rem; font-weight: 300; line-height: 1.5; }
+.elkw-word cite, .elkw-word figcaption { display: block; margin-top: 0.5rem; font-style: normal; font-weight: 600; font-size: var(--elkw-fs-small); }
+
+/* ---------- Person: Initialen + Personenliste ---------- */
+.elkw-avatar { flex: none; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--elkw-radius-btn); background: var(--elkw-akzent-20); color: var(--elkw-text); font-weight: 600; font-size: 0.9rem; }
+.elkw-people { margin: 0; padding: 0; list-style: none; }
+.elkw-people li { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 0; border-bottom: 1px solid var(--elkw-light); }
+.elkw-people li:last-child { border-bottom: 0; }
+.elkw-people__who { flex: 1; min-width: 0; }
+.elkw-people__who span { display: block; font-size: var(--elkw-fs-small); }
+
+/* ---------- Segmente (schneller Filter, aria-pressed) ---------- */
+.elkw-segments { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 var(--elkw-gap); padding: 0; list-style: none; }
+.elkw-segments button { border: 1px solid var(--elkw-primary); background: var(--elkw-white); color: var(--elkw-text); border-radius: var(--elkw-radius-btn); padding: 0.3rem 0.9rem; font: inherit; cursor: pointer; transition: var(--elkw-transition); }
+.elkw-segments button:hover { background: var(--elkw-neutral-10); }
+.elkw-segments [aria-pressed="true"] { background: var(--elkw-action); border-color: var(--elkw-action); color: var(--elkw-on-action); }
+
+@media (max-width: 1023px) { .elkw-grid-wide { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Schmale Bildschirme ---------- */
+@media (max-width: 1023px) {
+  .elkw-meta { display: none; }
+  .elkw { --elkw-logo-h: 40px; }
+  .elkw-burger { display: block; }
+  .elkw-header .elkw-nav { display: none; }
+  .elkw-header .elkw-nav.is-open { display: block; width: 100%; }
+  .elkw-header .elkw-nav.is-open > ul { flex-direction: column; gap: 0; padding: 0 0 1rem; }
+  .elkw-header .elkw-nav.is-open .elkw-submenu { display: block; position: static; padding: 0 0 0 1rem; min-width: 0; }
+  .elkw-header__inner { min-height: 0.5rem; }
+  .elkw-grid-main, .elkw-grid-3 { grid-template-columns: 1fr; }
+  .elkw-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .elkw-grid-2, .elkw-grid-4 { grid-template-columns: 1fr; }
+  .elkw-tile { min-height: 420px; }
+}
+
+
+/* ==========================================================================
+   ELKW Design – App-Ebene (Webanwendungen)
+   Ergänzt elkw-components.css um Bausteine zum Arbeiten. Alles aus vorhandenen
+   Tokens abgeleitet: Sarabun, 1-px-Rahmen, neutrale Grauflächen, Farbwelt-Rollen,
+   Rechtecke statt Pills, keine Schatten. Beschreibung: references/apps.md
+   Empfohlen: <html class="elkw" data-dichte="arbeiten" data-farbwelt="01">
+   ========================================================================== */
+
+/* ---------- App-Rahmen ---------- */
+.elkw-app { display: grid; height: 100vh; grid-template-columns: 15rem minmax(0, 1fr); grid-template-rows: auto 1fr;
+  grid-template-areas: "bar bar" "nav main"; }
+/* Wenige Bereiche: farbige Navigationsleiste .elkw-app__topnav.elkw-header statt Seitennavigation */
+.elkw-app--topnav { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 1fr; grid-template-areas: "bar" "topnav" "main"; }
+.elkw-app__topnav { grid-area: topnav; }
+.elkw-app__topnav .elkw-header__inner { padding: 0 var(--elkw-space-l); }
+.elkw-app__bar  { grid-area: bar; }
+.elkw-app__nav  { grid-area: nav; overflow-y: auto; background: var(--elkw-neutral-10); border-right: 1px solid var(--elkw-light); }
+.elkw-app__main { grid-area: main; position: relative; min-width: 0; overflow-y: auto; padding: var(--elkw-space-l) var(--elkw-space-l) var(--elkw-space-xl); }  /* nur der Arbeitsbereich scrollt */
+.elkw-app__main--split { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: var(--elkw-gap); align-items: start; }
+
+/* App-Leiste: weiß, Logo + Anwendungsname links, Suche/Benutzer rechts, 1-px-Linie unten */
+.elkw-appbar { display: flex; align-items: center; gap: var(--elkw-space-m); padding: var(--elkw-header-pad) var(--elkw-space-l); background: var(--elkw-white); border-bottom: 1px solid var(--elkw-border); }
+.elkw-appbar__logo { display: block; color: var(--elkw-text); text-decoration: none; }
+.elkw-appbar__logo img { display: block; height: var(--elkw-logo-h); width: auto; }
+.elkw-appbar__name { font-weight: 600; padding-left: var(--elkw-space-m); border-left: 1px solid var(--elkw-border); white-space: nowrap; }
+.elkw-appbar__end { margin-left: auto; display: flex; align-items: center; gap: var(--elkw-space-m); font-size: var(--elkw-fs-small); }
+.elkw-appbar__end input[type=search] { width: 16rem; }
+.elkw-appbar__toggle { display: none; background: none; border: 0; padding: 0.4rem; cursor: pointer; color: var(--elkw-text); }
+.elkw-appbar__toggle span { display: block; width: 24px; height: 2px; margin: 5px 0; background: currentColor; }
+
+/* Seitennavigation: neutrale Fläche, aktiver Punkt weiß mit Balken in der Akzentfarbe */
+.elkw-sidenav { padding: var(--elkw-space-m) 0; }
+.elkw-sidenav__group { margin: var(--elkw-space-m) 0 0.25rem; padding: 0 var(--elkw-space-m); }
+.elkw-sidenav ul { margin: 0; padding: 0; list-style: none; }
+.elkw-sidenav a { position: relative; display: block; padding: 0.45rem var(--elkw-space-m); color: var(--elkw-text); text-decoration: none; transition: var(--elkw-transition); }
+.elkw .elkw-sidenav :focus-visible { outline-offset: -2px; }
+.elkw-sidenav a:hover { background: var(--elkw-light); }
+.elkw-sidenav a[aria-current] { background: var(--elkw-white); font-weight: 600; }
+.elkw-sidenav a[aria-current]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--elkw-akzent); }
+.elkw-sidenav .elkw-count { float: right; font-weight: 400; font-size: var(--elkw-fs-small); }
+
+/* ---------- Seitenkopf, Brotkrumen, Werkzeugleiste ---------- */
+.elkw-breadcrumb { margin: 0 0 0.5rem; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem; font-size: var(--elkw-fs-small); }
+.elkw-breadcrumb li + li::before { content: "/"; margin-right: 0.25rem; color: var(--elkw-neutral-60); }
+.elkw-breadcrumb a { color: var(--elkw-action); text-decoration: none; border-bottom: 1px solid; }
+.elkw-pagehead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem var(--elkw-space-m); margin-bottom: var(--elkw-space-m); }
+.elkw-pagehead h1 { margin: 0; }
+.elkw-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 0.75rem var(--elkw-space-m); padding: 0.75rem var(--elkw-space-m); background: var(--elkw-light); border-radius: var(--elkw-radius); margin-bottom: var(--elkw-space-m); }
+.elkw-toolbar .elkw-field { min-width: 10rem; }
+.elkw-toolbar__end { margin-left: auto; display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
+.elkw-toolbar--selection { background: var(--elkw-akzent-10); }   /* Massenaktionen bei Auswahl */
+
+/* ---------- Datentabelle ---------- */
+.elkw-datatable { position: relative; }
+.elkw-datatable thead th { position: sticky; top: 0; z-index: 1; white-space: nowrap; }
+.elkw-datatable th.num, .elkw-datatable td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.elkw-datatable .select { width: 2.5rem; text-align: center; }
+.elkw-datatable .rowactions { width: 1%; white-space: nowrap; text-align: right; }
+.elkw-datatable td { vertical-align: middle; }
+.elkw-datatable .elkw-btn { margin: 0; padding-top: 0; padding-bottom: 0; }
+.elkw-sort { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer; }
+.elkw-sort::after { content: "\2195"; color: var(--elkw-neutral-60); }               /* ↕ unsortiert */
+[aria-sort="ascending"]  .elkw-sort::after { content: "\2191"; color: var(--elkw-text); }   /* ↑ */
+[aria-sort="descending"] .elkw-sort::after { content: "\2193"; color: var(--elkw-text); }   /* ↓ */
+.elkw-tablefoot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 0.75rem; font-size: var(--elkw-fs-small); }
+
+/* Seitenwechsel */
+.elkw-pagination { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.elkw-pagination a, .elkw-pagination span { display: block; min-width: 2.25rem; padding: 0.25rem 0.5rem; text-align: center; border: 1px solid var(--elkw-light); color: var(--elkw-text); text-decoration: none; background: var(--elkw-white); }
+.elkw-pagination a:hover { background: var(--elkw-neutral-10); }
+.elkw-pagination [aria-current] { background: var(--elkw-action); border-color: var(--elkw-action); color: var(--elkw-on-action); }
+
+/* ---------- Status (Wort + kleines Quadrat) ---------- */
+.elkw-status { display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
+.elkw-status::before { content: ""; flex: none; width: 0.6em; height: 0.6em; background: var(--status, var(--elkw-neutral-60)); }
+.elkw-status--erfolg  { --status: var(--elkw-status-erfolg); }
+.elkw-status--warnung { --status: var(--elkw-status-warnung); }
+.elkw-status--fehler  { --status: var(--elkw-status-fehler); }
+.elkw-status--aktiv   { --status: var(--elkw-akzent); }
+.elkw-status--offen   { --status: var(--elkw-neutral-60); }
+
+/* ---------- Meldungen (Infobox mit Balken links, Bedeutung immer als Wort) ---------- */
+.elkw-alert--hinweis { --status: var(--elkw-status-hinweis); }
+.elkw-alert { position: relative; padding: var(--elkw-space-m) var(--elkw-space-m) var(--elkw-space-m) calc(var(--elkw-space-m) + 4mm); background: var(--elkw-white); border: 1px solid var(--elkw-border); border-radius: var(--elkw-radius); margin: 0 0 var(--elkw-space-m); }
+.elkw-alert::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3mm; background: var(--status, var(--elkw-action)); }
+.elkw-alert__title { display: block; font-weight: 700; margin-bottom: 0.25rem; }
+.elkw-alert p { margin: 0; }
+.elkw-alert ul { margin: 0.25rem 0 0; padding-left: 1.2rem; }
+.elkw-alert--erfolg  { --status: var(--elkw-status-erfolg); }
+.elkw-alert--warnung { --status: var(--elkw-status-warnung); }
+.elkw-alert--fehler  { --status: var(--elkw-status-fehler); }
+
+/* ---------- Formular-Ergänzungen ---------- */
+.elkw-required::after { content: " *"; color: var(--elkw-action); }   /* auch in components.css für Websites */
+.elkw-field-error { display: block; font-size: var(--elkw-fs-small); margin-top: 0.25rem; font-weight: 600; }
+.elkw-fieldset { border: 0; margin: 0 0 var(--elkw-space-l); padding: 0; }
+.elkw-fieldset legend { font-weight: 700; font-size: var(--elkw-fs-h4); margin-bottom: var(--elkw-space-s); padding: 0; }
+.elkw-choice { display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0; }
+.elkw-formactions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem 1rem; padding-top: var(--elkw-space-m); border-top: 1px solid var(--elkw-light); margin-top: var(--elkw-space-l); }
+
+/* Schritte (Formular in Schritten) */
+.elkw-steps { display: flex; flex-wrap: wrap; gap: 2px; margin: 0 0 var(--elkw-space-l); padding: 0; list-style: none; counter-reset: step; }
+.elkw-steps li { flex: 1 1 10rem; display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.9rem; background: var(--elkw-white); border: 1px solid var(--elkw-light); counter-increment: step; }
+.elkw-steps li::before { content: counter(step); flex: none; width: 1.75rem; height: 1.75rem; display: grid; place-items: center; font-weight: 700; background: var(--elkw-light); }
+.elkw-steps [aria-current="step"] { border-color: var(--elkw-action); font-weight: 600; }
+.elkw-steps [aria-current="step"]::before { background: var(--elkw-action); color: var(--elkw-on-action); }
+.elkw-steps .done { background: var(--elkw-neutral-10); }
+.elkw-steps .done::before { content: "\2713"; background: var(--elkw-dark); color: var(--elkw-on-dark); }
+
+/* ---------- Kennzahlen (Zahlenzeile, keine Kacheln mit Icons) ---------- */
+.elkw-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 2px; margin: 0 0 var(--elkw-space-l); padding: 0; background: var(--elkw-white); }
+.elkw-stats > div { padding: var(--elkw-space-s) var(--elkw-space-m); background: var(--elkw-light); }
+.elkw-stats dt { font-size: var(--elkw-fs-small); }
+.elkw-stats dd { margin: 0; font-size: 1.75rem; line-height: 1.2; font-weight: 700; font-variant-numeric: tabular-nums; }
+.elkw-stats dd small { font-size: var(--elkw-fs-small); font-weight: 400; }
+
+/* ---------- Detailliste ---------- */
+.elkw-details { display: grid; grid-template-columns: minmax(7rem, auto) 1fr; gap: 0.35rem 1rem; margin: 0; }
+.elkw-details dt { font-weight: 600; }
+.elkw-details dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+
+/* ---------- Drawer (Seitenpanel als Overlay, aus Dialog abgeleitet) ---------- */
+.elkw-drawer { margin: 0 0 0 auto; height: 100vh; max-height: 100vh; width: min(30rem, 100vw); max-width: none; padding: 0; border: 0; border-left: 1px solid var(--elkw-border); background: var(--elkw-white); color: var(--elkw-text); }
+.elkw-drawer::backdrop { background: var(--elkw-overlay); }
+.elkw-drawer__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: var(--elkw-space-s) var(--elkw-space-m); background: var(--elkw-light); }
+.elkw-drawer__head h2 { margin: 0; font-size: var(--elkw-fs-h3); }
+.elkw-drawer[open] { display: flex; flex-direction: column; }
+.elkw-drawer__body { flex: 1; padding: var(--elkw-space-m); overflow: auto; }
+.elkw-drawer__foot { display: flex; justify-content: flex-end; gap: 0.75rem; padding: var(--elkw-space-s) var(--elkw-space-m); border-top: 1px solid var(--elkw-light); }
+.elkw-close { border: 0; background: none; font: inherit; font-size: 1.5rem; line-height: 1; padding: 0.25rem 0.5rem; cursor: pointer; color: var(--elkw-text); }
+
+/* ---------- Aufklappmenü für Zeilenaktionen (details) ---------- */
+.elkw-menu { position: relative; display: inline-block; }
+.elkw-menu > summary { list-style: none; cursor: pointer; padding: 0.15rem 0.6rem; border: 1px solid var(--elkw-light); background: var(--elkw-white); }
+.elkw-menu > summary::-webkit-details-marker { display: none; }
+.elkw-menu > summary::after { content: " \25BE"; }
+.elkw-menu ul { position: absolute; right: 0; top: calc(100% + 2px); z-index: 5; min-width: 12rem; margin: 0; padding: 0.25rem 0; list-style: none; background: var(--elkw-white); border: 1px solid var(--elkw-border); text-align: left; }
+.elkw-menu li > a, .elkw-menu li > button { display: block; width: 100%; padding: 0.4rem 0.9rem; border: 0; background: none; font: inherit; color: var(--elkw-text); text-align: left; text-decoration: none; cursor: pointer; }
+.elkw-menu li > a:hover, .elkw-menu li > button:hover { background: var(--elkw-neutral-10); }
+
+/* ---------- Leer und Laden ---------- */
+.elkw-empty { padding: var(--elkw-space-xl) var(--elkw-space-m); text-align: center; background: var(--elkw-neutral-10); border-radius: var(--elkw-radius); }
+.elkw-empty h2, .elkw-empty h3 { margin-top: 0; }
+.elkw-empty p { max-width: 50ch; margin: 0 auto var(--elkw-space-m); }
+.elkw-loading { padding: var(--elkw-space-m); color: var(--elkw-dunkelgrau); }
+[aria-busy="true"] { cursor: progress; }
+
+/* ---------- Schmale Fenster ---------- */
+@media (max-width: 1023px) {
+  .elkw-app { height: auto; min-height: 100vh; grid-template-columns: minmax(0, 1fr); grid-template-areas: "bar" "nav" "main"; }
+  .elkw-app--topnav { grid-template-areas: "bar" "topnav" "main"; }
+  .elkw-app__main, .elkw-app__nav { overflow: visible; }
+  .elkw-app__nav, .elkw-app--topnav .elkw-app__topnav .elkw-nav { display: none; border-right: 0; border-bottom: 1px solid var(--elkw-light); }
+  .elkw-app--topnav .elkw-app__topnav .elkw-nav.is-open { display: block; }
+  .elkw-app__nav.is-open { display: block; }
+  .elkw-appbar__toggle { display: block; }
+  .elkw-appbar__end input[type=search] { width: 10rem; }
+  .elkw-app__main { padding: var(--elkw-space-m); }
+  .elkw-app__main--split { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .elkw-appbar { flex-wrap: wrap; padding: var(--elkw-header-pad) var(--elkw-space-m); }
+  .elkw-appbar__name { display: none; }
+  .elkw-appbar__end .elkw-appbar__user { display: none; }
+  .elkw-toolbar__end { margin-left: 0; }
+  .elkw-details { grid-template-columns: 1fr; }
+}
+
+
+/* ---- Anordnung für diese Seite (nur Variablen der Bibliothek) ---- */
+body { background: var(--elkw-white); color: var(--elkw-text); }
+.elkw .elkw-container { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.hk-section { padding-block: var(--elkw-section); border-top: 1px solid var(--elkw-light); }
+.hk-section:first-of-type { border-top: 0; }
+.hk-section h2 { margin-top: 0; }
+.hk-lead { max-width: 75ch; }
+.hk-brand-text { font-size: var(--elkw-fs-small); line-height: 1.4; text-align: right; }
+.hk-nav-plain ul { flex-wrap: wrap; }
+.elkw .elkw-table td, .elkw .elkw-table th { vertical-align: top; }
+.hk-grid td { min-width: 7.5rem; font-variant-numeric: tabular-nums; }
+.hk-grid th[scope=row] { white-space: nowrap; }
+.hk-cell-hk { background: var(--elkw-akzent); color: var(--elkw-on-akzent); font-weight: 600; }
+.hk-cell-chg { background: var(--elkw-akzent-20); }
+.hk-cell-free { color: var(--elkw-neutral-60); }
+.hk-tag { display: block; font-size: var(--elkw-fs-small); line-height: 1.4; }
+.hk-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0.75rem 0 0; padding: 0; list-style: none; font-size: var(--elkw-fs-small); }
+.hk-legend li { display: flex; align-items: center; gap: 0.4rem; }
+.hk-swatch { width: 1rem; height: 1rem; border: 1px solid var(--elkw-border); flex: none; }
+.hk-swatch--hk { background: var(--elkw-akzent); border-color: var(--elkw-akzent); }
+.hk-swatch--chg { background: var(--elkw-akzent-20); }
+.hk-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: var(--elkw-gap); }
+.hk-cols > * { min-width: 0; }
+.hk-plan td, .hk-plan th { font-size: 0.95rem; line-height: 1.45; }
+.hk-plan .hk-month th { background: var(--elkw-light); font-weight: 700; }
+.hk-plan .hk-muted td { color: var(--elkw-neutral-60); }
+.hk-plan td.hk-c { min-width: 8.5rem; }
+.hk-plan .hk-date { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.hk-plan .hk-sticky { position: sticky; left: 0; background: var(--elkw-white); z-index: 1; }
+.hk-plan thead th { position: sticky; top: 0; z-index: 2; background: var(--elkw-table-head); }
+.hk-plan thead th.hk-sticky { z-index: 3; }
+.hk-plan-wrap { max-height: 80vh; overflow: auto; }
+.hk-toolbar fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.hk-toolbar legend { font-size: var(--elkw-fs-small); padding: 0; margin-bottom: 0.25rem; }
+.hk-toolbar .hk-checks { display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+.hk-toolbar .elkw-segments { margin: 0; }
+.hk-compare td.num, .hk-compare th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.hk-compare tbody th { font-weight: 400; }
+.hk-panel-body { padding: var(--elkw-space-m) 0 0; }
+.hk-procon { margin: 0; padding-left: 1.2rem; }
+.hk-small { font-size: var(--elkw-fs-small); line-height: 1.5; }
+.hk-kicker-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; align-items: baseline; }
+.hk-src { font-size: var(--elkw-fs-small); line-height: 1.5; }
+@media (max-width: 640px) { .hk-brand-text { display: none; } }
+</style>
+
+<div class="elkw" data-farbwelt="01">
+<a class="elkw-skiplink" href="#inhalt">Zum Inhalt springen</a>
+
+<div class="elkw-brandbar">
+  <div class="elkw-container elkw-brandbar__inner">
+    <span class="elkw-brandbar__logo"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMDk1LjQgMjUzLjciPg0KICA8ZGVmcz4NCiAgICA8c3R5bGU+DQogICAgICAuY2xzLTEgew0KICAgICAgICBmaWxsOiAjZmZmOw0KICAgICAgfQ0KDQogICAgICAuY2xzLTIgew0KICAgICAgICBmaWxsOiAjOGQxOTdjOw0KICAgICAgfQ0KICAgIDwvc3R5bGU+DQogIDwvZGVmcz4NCiAgPGc+DQogICAgPGcgaWQ9IkViZW5lXzEiPg0KICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMjUwLjUsMTI2LjZjMCw2OC4xLTU1LjEsMTIzLjItMTIzLjIsMTIzLjJTNCwxOTQuNyw0LDEyNi42LDU5LjEsMy40LDEyNy4yLDMuNHMxMjMuMyw1NS4xLDEyMy4zLDEyMy4yIj48L3BhdGg+DQogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjEuOCA5OS4xIDEyMi45IDk5LjEgMTIyLjkgNDcuOCAxMDUuNCA0Ny44IDEwNS40IDgxLjYgNjEuOCA4MS42IDYxLjggOTkuMSI+PC9wb2x5Z29uPg0KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjYxLjggMTA3LjkgMTIyLjkgMTA3LjkgMTIyLjkgMjE4LjUgMTA1LjQgMjE4LjUgMTA1LjQgMTI1LjIgNjEuOCAxMjUuMiA2MS44IDEwNy45Ij48L3BvbHlnb24+DQogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTkyLjUgOTkuMSAxMzEuMyA5OS4xIDEzMS4zIDQ3LjggMTQ4LjggNDcuOCAxNDguOCA4MS42IDE5Mi41IDgxLjYgMTkyLjUgOTkuMSI+PC9wb2x5Z29uPg0KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjE5Mi41IDEwNy45IDEzMS4zIDEwNy45IDEzMS4zIDIxOC41IDE0OC44IDIxOC41IDE0OC44IDEyNS4yIDE5Mi41IDEyNS4yIDE5Mi41IDEwNy45Ij48L3BvbHlnb24+DQogICAgICA8Zz4NCiAgICAgICAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTczMi4yLDE3NC42YzAsMy4xLS43LDUuNS0yLjQsNy4ycy0zLjgsMi42LTYuNywyLjYtNS4zLTEuMi03LTMuNmMtMS43LTIuNC0yLjQtNS41LTIuNC05LjZzMS03LDIuNi05LjFjMS43LTIuMiw0LjEtMy40LDctMy40czUsMSw2LjcsMi45LDIuNCw0LjYsMi40LDcuOXY1YzAsLjEtLjIuMS0uMi4xWk03MzIuOSwxNTUuOWwtLjcsNC44aC0uMmMtMS0xLjctMi40LTMuMS00LjEtNC4xLTEuNy0xLTMuNi0xLjQtNS44LTEuNC00LjEsMC03LjQsMS40LTkuNiw0LjMtMi40LDIuOS0zLjYsNi43LTMuNiwxMS41czEuMiw5LjQsMy42LDEyLjVjMi40LDMuMSw1LjgsNC42LDkuOCw0LjZzNC4zLS41LDYtMS40LDMuMS0yLjIsNC4xLTMuOHYzLjFjMCw0LjEtMSw3LjItMi42LDkuMS0xLjcsMS45LTQuMywyLjktNy43LDIuOXMtMy40LS4yLTQuOC0uNWMtMS40LS4yLTMuMS0xLTQuOC0xLjdsLTEuNCwzLjRjMy40LDEuOSw3LDIuNiwxMS4zLDIuNnM4LjItMS4yLDEwLjUtMy44YzIuNC0yLjYsMy42LTYuNSwzLjYtMTEuM3YtMzAuN2gtMy42Wk02ODkuNywxODcuNWg0LjN2LTE2LjVjMC0yLjIuNS00LjMsMS4yLTYuMnMxLjktMy40LDMuNC00LjNjMS40LTEsMy4xLTEuNyw0LjgtMS43czEuNCwwLDIuMi4ydi0zLjZjLS41LS4yLTEtLjItMS45LS4yLTIuMiwwLTQuMy41LTYsMS45cy0yLjksMi45LTMuOCw1LjNoLS4ydi0uN2MwLTIuMiwwLTMuOC0uMi01LjVoLTQuMWMuMiwxLjcuMiw0LjEuMiw3Ljd2MjMuNmMtLjEsMCwwLDAsMCwwWk02NzgsMTcwaC0xOC45Yy4yLTMuNiwxLjItNi4yLDIuOS04LjQsMS43LTEuOSwzLjgtMi45LDYuNy0yLjlzNSwxLDYuNywyLjksMi42LDQuNiwyLjYsNy45di41Wk02ODIsMTcxLjJjMC01LTEuMi05LjEtMy42LTExLjctMi40LTIuOS01LjUtNC4zLTkuOC00LjNzLTcuOSwxLjQtMTAuMyw0LjNjLTIuNCwyLjktMy44LDctMy44LDEyLjJzMS4yLDkuMSwzLjgsMTIsNiw0LjMsMTAuNSw0LjMsNC44LS41LDctMS40YzIuMi0xLDMuNi0yLjQsNC44LTQuM2wtMi42LTIuNGMtMSwxLjQtMi40LDIuNi0zLjgsMy40LTEuNy43LTMuNCwxLjItNS4zLDEuMi0yLjksMC01LjMtMS03LjItMi45LTEuNy0xLjktMi42LTQuNi0zLjEtOC4yaDIzdi0yLjJoLjRaTTYzNS4xLDE4NC40Yy0yLjksMC01LTEtNy0yLjYtMS43LTEuNy0yLjYtNC4xLTIuNi03LjJ2LTUuNWMwLTMuNCwxLTUuOCwyLjYtNy43LDEuNy0xLjksNC4xLTIuOSw2LjctMi45czUsMS4yLDYuNywzLjQsMi40LDUuMywyLjQsOS4xLS43LDcuNC0yLjQsOS42Yy0xLjIsMi42LTMuNiwzLjgtNi40LDMuOE02MzUuNSwxODhjMi42LDAsNS0uNyw3LTIuMnMzLjYtMy40LDQuNi02LDEuNy01LjUsMS43LTkuMS0xLjItOC42LTMuNi0xMS41Yy0yLjQtMi45LTUuNS00LjMtOS42LTQuM3MtNC4xLjUtNS44LDEuNGMtMS43LDEtMy4xLDIuMi00LjEsMy44aC0uMnYtMTkuOWgtNC40djM5LjFjMCwzLjgsMCw2LjUtLjIsNy45aDMuOGMuMi0xLjcuMi0zLjYuMi01LjNoLjJjMSwxLjcsMi4yLDMuMSw0LjEsNC4zLDIuMywxLjMsNC4yLDEuOCw2LjMsMS44TTU2Ny43LDE4Ny41aDQuM3YtMTkuMmMwLTEuNy41LTMuMSwxLjItNC44LjctMS40LDEuOS0yLjYsMy4xLTMuNiwxLjQtMSwyLjYtMS40LDQuMy0xLjQsNC44LDAsNy4yLDMuNCw3LjIsOS44djE4LjloNC4zdi0xOS4yYzAtMi42LjctNSwyLjQtNi43czMuNi0yLjYsNi0yLjYsNC4zLjcsNS41LDIuNCwxLjksMy44LDEuOSw3djE5LjJoNC4zdi0xOS43YzAtNC4xLTEtNy4yLTIuOS05LjRzLTQuNi0zLjQtOC4yLTMuNC00LjMuNy02LjIsMS45LTMuMSwyLjktNC4xLDVjLS41LTIuMi0xLjctMy44LTMuNC01cy0zLjYtMS45LTUuOC0xLjktNC4xLjUtNiwxLjdjLTEuNywxLjItMy4xLDIuNi00LjEsNC42aC0uMmMwLTIuNiwwLTQuNi0uMi01LjVoLTMuOGMuMiwyLjQuMiw1LC4yLDcuOWwuMiwyNGgwWk01NTYuNCwxNzBoLTE4LjljLjItMy42LDEuMi02LjIsMi45LTguNCwxLjctMS45LDMuOC0yLjksNi43LTIuOXM1LDEsNywyLjljMS43LDEuOSwyLjYsNC42LDIuNiw3Ljl2LjVoLS4zWk01NjAuNSwxNzEuMmMwLTUtMS4yLTkuMS0zLjYtMTEuNy0yLjQtMi45LTUuNS00LjMtOS44LTQuM3MtNy45LDEuNC0xMC4zLDQuM2MtMi40LDIuOS0zLjgsNy0zLjgsMTIuMnMxLjIsOS4xLDMuOCwxMiw2LDQuMywxMC41LDQuMyw0LjgtLjUsNy0xLjRjMi4yLTEsMy42LTIuNCw0LjgtNC4zbC0yLjYtMi40Yy0xLDEuNC0yLjQsMi42LTMuOCwzLjQtMS43LjctMy40LDEuMi01LjMsMS4yLTIuOSwwLTUuMy0xLTcuMi0yLjktMS43LTEuOS0yLjYtNC42LTMuMS04LjJoMjN2LTIuMmguNFpNNTIzLjMsMTg4YzIuNCwwLDQuMS0uMiw1LjUtMWwtLjUtMy40Yy0xLjIuNS0yLjYuNy00LjMuN3MtMy4xLS41LTMuOC0xLjdjLS43LTEtMS4yLTIuOS0xLjItNS4zdi0xOC41aDguOXYtMy42aC04Ljl2LTkuOGgtLjJsLTQuMSwxLjR2OC42aC01Ljh2My42aDUuOHYxOC45YzAsMy4xLjcsNS41LDIuMiw3LjIsMS42LDIuMiwzLjUsMi45LDYuNCwyLjlNNDk4LjksMTg4YzIuMiwwLDQuMS0uMiw1LjUtMWwtLjUtMy40Yy0xLjIuNS0yLjYuNy00LjMuN3MtMi45LS41LTMuOC0xLjdjLS43LTEtMS4yLTIuOS0xLjItNS4zdi0xOC41aDguOXYtMy42aC04Ljl2LTkuOGgtLjJsLTQuMSwxLjR2OC42aC01Ljh2My42aDUuOHYxOC45YzAsMy4xLjcsNS41LDIuMiw3LjIsMS42LDIuMiwzLjcsMi45LDYuNCwyLjlNNDY0LjgsMTg3LjVoNC4zdi0xNi41YzAtMi4yLjUtNC4zLDEuMi02LjJzMS45LTMuNCwzLjQtNC4zYzEuNC0xLDMuMS0xLjcsNC44LTEuN3MxLjQsMCwyLjIuMnYtMy42Yy0uNS0uMi0xLS4yLTEuOS0uMi0yLjIsMC00LjMuNS02LDEuOS0xLjcsMS4yLTIuOSwyLjktMy44LDUuM2gtLjJ2LS43YzAtMi4yLDAtMy44LS4yLTUuNWgtNC4xYy4yLDEuNy4yLDQuMS4yLDcuN3YyMy43YzAsMCwuMSwwLC4xLDBaTTQ0OC44LDE1Mi41YzEsMCwxLjQtLjIsMi4yLS43LjUtLjUsMS0xLjIsMS0yLjJzLS4yLTEuNC0xLTEuOWMtLjUtLjUtMS4yLS43LTIuMi0uN3MtMS40LjItMi4yLjdjLS41LjUtMSwxLjItMSwxLjlzLjIsMS40LDEsMi4yYy41LjMsMS4yLjcsMi4yLjdNNDM2LjMsMTUyLjVjLjcsMCwxLjQtLjIsMi4yLTEsLjUtLjUsMS0xLjIsMS0yLjJzLS4yLTEuNC0uNy0xLjktMS4yLS43LTIuMi0uNy0xLjQuMi0yLjIuN2MtLjUuNS0xLDEuMi0xLDEuOSwwLDEsLjIsMS40LDEsMi4yLjUuNiwxLjIsMSwxLjksMU00NDAuNCwxODhjMi40LDAsNC42LS41LDYuNS0xLjdzMy40LTIuOSw0LjMtNC44aC4yYzAsMi4yLjIsNC4zLjcsNmgzLjhjLS41LTIuMi0uNS00LjMtLjUtNi4ydi0yNS40aC00LjN2MTcuM2MwLDIuMi0uNSw0LjEtMS4yLDUuOC0xLDEuNy0yLjIsMy4xLTMuNiw0LjFzLTMuMSwxLjQtNSwxLjRjLTUsMC03LjQtMy40LTcuNC0xMC4xdi0xOC43aC00LjN2MTguNWMwLDQuNiwxLDcuOSwyLjksMTAuMywxLjQsMi42LDQsMy41LDcuOSwzLjVNNDE4LjgsMTQzLjJsLTYuNywzNy40LTkuOC0zNy40aC01bC05LjgsMzcuNC02LjctMzcuNGgtNWw5LjEsNDQuNGg0LjhsMTAuMS0zOC4xLDEwLjEsMzguMWg0LjhsOS4xLTQ0LjRoLTVaTTMyNy40LDE4Ny41aDQuM3YtMTcuM2MwLTIuMi41LTQuMSwxLjItNS44LDEtMS43LDIuMi0zLjEsMy42LTQuMXMzLjEtMS40LDUtMS40LDQuMywxLDUuNSwyLjZjMS4yLDEuNywxLjksNC4zLDEuOSw3Ljl2MThoNC4zdi0xOGMwLTQuOC0xLTguNC0yLjktMTAuOC0xLjktMi40LTQuNi0zLjYtOC40LTMuNnMtNC42LjUtNi41LDEuOS0zLjQsMi45LTQuMyw0LjhoLS4yYzAtMi42LDAtNC42LS4yLTZoLTQuMWMuMiwxLjQuMiw0LjEuMiw3Ljl2MjMuN2MuMi4yLjYuMi42LjJaTTMxMy4zLDE4Ny41aDQuM3YtMzEuNmgtNC4zdjMxLjZaTTMxNS43LDE0OS43YzEsMCwxLjktLjIsMi40LTEsLjUtLjcsMS0xLjQsMS0yLjRzLS4yLTEuOS0xLTIuNGMtLjctLjUtMS40LTEtMi40LTFzLTEuOS4yLTIuNCwxYy0uNy41LTEsMS40LTEsMi40cy4yLDEuNywxLDIuNGMuNS43LDEuMiwxLDIuNCwxIj48L3BhdGg+DQogICAgICAgIDxwYXRoIGZpbGw9IiMwMDAiIGQ9Ik0xMDc0LjEsOTIuMWgtMTUuM2MuMi0yLjYsMS4yLTQuNiwyLjQtNiwxLjQtMS40LDMuMS0yLjIsNS4zLTIuMnM0LjMuNyw1LjUsMi4yYzEuNCwxLjQsMS45LDMuNCwxLjksNS44di4yaC4yWk0xMDgxLDk0LjVjMC01LTEuMi05LjEtMy44LTEyLTIuNi0yLjktNi00LjMtMTAuNS00LjNzLTguNCwxLjQtMTEuMyw0LjNjLTIuNiwyLjktNC4xLDctNC4xLDEyLjJzMS40LDkuMSw0LjEsMTJjMi42LDIuOSw2LjUsNC4zLDExLjMsNC4zczUuNS0uNSw3LjktMS43LDQuMS0yLjYsNS41LTQuOGwtMy44LTMuOGMtMS4yLDEuNC0yLjYsMi40LTQuMSwzLjFzLTMuMSwxLTUsMWMtNC44LDAtNy43LTIuNi04LjQtNy43aDIyLjN2LTIuNmgwWk0xMDE1LjgsMTEwLjNoNy4ydi0xNy4yYzAtMi45LjctNS4zLDIuMi03LDEuNC0xLjcsMy42LTIuNiw2LTIuNnMzLjYuNyw0LjgsMi4yYzEuMiwxLjQsMS43LDMuNiwxLjcsNi4ydjE4LjVoNy4ydi0xOC44YzAtNC4zLTEtNy40LTMuMS05LjhzLTUtMy42LTguNi0zLjYtNC4xLjUtNiwxLjJjLTEuOSwxLTMuMSwxLjktNC4xLDMuNnYtMTkuNGgtNy4ydjQ2LjdoMFpNOTk4LjEsMTExLjFjMi45LDAsNS4zLS41LDcuNC0xLjcsMi4yLTEsMy44LTIuNiw1LTQuNmwtNC4zLTMuOGMtMSwxLjQtMS45LDIuNC0zLjQsMy40LTEuNC43LTIuOSwxLjItNC42LDEuMi0yLjYsMC00LjgtMS02LjItMi45cy0yLjItNC42LTIuMi03LjkuNy02LDIuMi03LjljMS40LTEuOSwzLjYtMi45LDYuMi0yLjlzMy4xLjUsNC42LDEuMiwyLjQsMS45LDMuNCwzLjRsNC4zLTMuOGMtMS4yLTEuOS0yLjktMy42LTUtNC42LTIuMi0xLTQuNi0xLjctNy40LTEuNy00LjgsMC04LjYsMS40LTExLjMsNC4zcy00LjEsNy00LjEsMTIsMS40LDkuMSw0LjEsMTIsNi41LDQuMywxMS4zLDQuM005NTkuNywxMTAuM2g3LjJ2LTE0LjRjMC0yLjIuNS00LjEsMS40LTYsMS0xLjksMi40LTMuNCwzLjgtNC4zLDEuNy0xLDMuNi0xLjcsNS41LTEuN3MxLjIsMCwxLjcuMnYtNS44Yy0uNS0uMi0xLjItLjItMS45LS4yLTIuNiwwLTQuOC43LTYuNywxLjktMS45LDEuMi0zLjQsMi45LTQuMSw1aC0uMnYtLjdjMC0yLjIsMC0zLjgtLjItNS41aC02LjdjLjIsMS43LjIsNC4xLjIsNy43djIzLjhoMFpNOTQzLjYsMTEwLjNoNy4ydi0zMS42aC03LjJ2MzEuNlpNOTQ3LjIsNzQuNGMxLjQsMCwyLjYtLjUsMy40LTEuMiwxLS43LDEuMi0xLjksMS4yLTMuMXMtLjUtMi40LTEuMi0zLjFjLTEtLjctMS45LTEuMi0zLjQtMS4ycy0yLjYuNS0zLjQsMS4yYy0xLC43LTEuMiwxLjktMS4yLDMuMXMuNSwyLjQsMS4yLDMuMWMuOC45LDIsMS4yLDMuNCwxLjJNOTM3LjksMTEwLjNsLTEyLjktMTkuOSwxMi0xMS43aC04LjlsLTEyLDEydi0yNy40aC03LjJ2NDdoNy4ydi0xMWw0LjEtNC4xLDkuNiwxNS4xaDguMVpNODkwLjIsMTExLjFjMy44LDAsNi43LTEsOS4xLTIuOSwyLjItMS45LDMuNC00LjMsMy40LTcuNHMtLjctNC4xLTEuOS01LjUtMy44LTIuOS03LjQtNC4xYy0xLjktLjctMy4xLTEuMi00LjEtMS43cy0xLjQtMS0xLjktMS40Yy0uMi0uNS0uNS0xLS41LTEuNywwLTEsLjUtMS43LDEuMi0yLjJzMS45LS43LDMuMS0uNywyLjQuMiwzLjYuN2MxLC41LDEuOSwxLjIsMi42LDIuMmw0LjMtMy4xYy0xLTEuNy0yLjQtMi45LTQuMy0zLjgtMS45LTEtMy44LTEuNC02LjItMS40LTMuNCwwLTYuMi43LTguMiwyLjQtMi4yLDEuNy0zLjEsMy42LTMuMSw2LjJzLjcsNC4xLDIuNCw1LjVjMS40LDEuNCw0LjEsMi45LDcuOSw0LjMsMi4yLDEsMy44LDEuNyw0LjYsMi40czEuMiwxLjQsMS4yLDIuNC0uNSwyLjQtMS40LDMuMWMtMSwuNy0yLjIsMS4yLTMuOCwxLjJzLTIuNi0uMi0zLjgtMWMtMS4yLS43LTIuMi0xLjQtMi45LTIuNmwtNC42LDMuMWMxLDEuNywyLjIsMy4xLDQuMyw0LjMsMS42LDEuMiwzLjcsMS43LDYuNCwxLjdNODY3LjYsOTIuMWgtMTUuM2MuMi0yLjYsMS4yLTQuNiwyLjQtNiwxLjQtMS40LDMuMS0yLjIsNS4zLTIuMnM0LjMuNyw1LjUsMi4yYzEuMiwxLjQsMS45LDMuNCwxLjksNS44di4yaC4yWk04NzQuMyw5NC41YzAtNS0xLjItOS4xLTMuOC0xMnMtNi00LjMtMTAuNS00LjMtOC40LDEuNC0xMS4zLDQuM2MtMi42LDIuOS00LjEsNy00LjEsMTIuMnMxLjQsOS4xLDQuMSwxMiw2LjUsNC4zLDExLjMsNC4zLDUuNS0uNSw3LjktMS43LDQuMS0yLjYsNS41LTQuOGwtMy44LTMuOGMtMS4yLDEuNC0yLjYsMi40LTQuMSwzLjFzLTMuMSwxLTUsMWMtNC44LDAtNy43LTIuNi04LjQtNy43aDIyLjN2LTIuNmgtLjFaTTgyMy4zLDEwNS41Yy0yLjQsMC00LjMtMS01LjUtMi45cy0xLjktNC44LTEuOS04LjQuNy02LDEuOS03LjksMy4xLTIuOSw1LjUtMi45LDQuMS43LDUuNSwyLjJjMS40LDEuNCwyLjIsMy40LDIuMiw1Ljh2Ni4yYzAsMi40LS43LDQuMy0yLjIsNS41LTEuNSwxLjctMy40LDIuNC01LjUsMi40TTgyMS44LDExMS4xYzEuOSwwLDMuOC0uNSw1LjUtMS40LDEuNy0xLDMuMS0yLjIsNC4xLTMuNmguMmMwLDIuMiwwLDMuNi4yLDQuNmg2LjdjLS4yLTEuMi0uMi00LjEtLjItOC40di0zOWgtNy4ydjE4LjloLS4yYy0yLjItMi45LTUtNC4xLTguOS00LjFzLTUsLjctNy4yLDEuOWMtMS45LDEuMi0zLjYsMy4xLTQuOCw1LjVzLTEuNyw1LjMtMS43LDguNGMwLDUuMywxLjIsOS40LDMuNiwxMi41LDIuNSwzLDUuOSw0LjcsOS45LDQuN003NzMuNCwxMTAuM2g3LjJ2LTE3LjJjMC0yLjYuNy00LjgsMi4yLTYuNywxLjQtMS43LDMuNi0yLjYsNi0yLjZzMy42LjcsNC42LDIuMmMxLDEuNCwxLjQsMy42LDEuNCw2LjV2MThoNy4ydi0xNy45YzAtNC44LTEtOC40LTIuOS0xMC44cy00LjYtMy42LTguNC0zLjYtNC42LjUtNi41LDEuNy0zLjQsMi42LTQuMSw0LjZoLS4yYzAtMS43LDAtMy42LS4yLTUuNWgtNi43Yy4yLDEuNy4yLDQuMy4yLDguMnYyMy4zYzAtLjIuMi0uMi4yLS4yWk03NTAuNiwxMDUuNWMtMS43LDAtMi45LS41LTMuOC0xLjJzLTEuNC0xLjktMS40LTMuNC43LTIuOSwxLjktMy44YzEuMi0xLDMuMS0xLjQsNS4zLTEuNGg1Ljh2My42YzAsMS43LS43LDMuMS0yLjIsNC4zLTEuNywxLjUtMy40LDEuOS01LjYsMS45TTc0OC45LDExMS4xYzQuMSwwLDcuNC0xLjQsOS44LTQuNmguMmMuMiwxLjcuNSwzLjEuNyw0LjFoNi41Yy0uMi0xLS41LTIuMi0uNS0zLjQtLjItMS4yLS4yLTIuNC0uMi0zLjF2LTE0LjljMC0zLjYtMS4yLTYuMi0zLjYtOC4yLTIuNC0xLjktNS41LTIuOS05LjYtMi45cy01LC41LTcuMiwxLjRjLTIuMiwxLTQuMywyLjItNS44LDQuMWwzLjQsNC4zYzEuMi0xLjIsMi40LTIuNCw0LjEtMy4xLDEuNy0uNywzLjQtMSw1LjMtMXMzLjYuNSw0LjYsMS40YzEuMiwxLDEuNywyLjQsMS43LDQuM3YxLjRoLTUuNWMtNC42LDAtOC4yLDEtMTAuNSwyLjYtMi40LDEuNy0zLjgsNC4zLTMuOCw3LjRzLjUsMy42LDEuNCw1LDIuMiwyLjYsMy44LDMuNmMxLjQsMS4xLDMuMSwxLjYsNS4yLDEuNk03MDQuMywxMTAuM2gyOXYtNi41aC0yMS4xdi0zNy44aC03Ljl2NDQuM2gwWk02NzUuMSw5Mi4xaC0xNS4zYy4yLTIuNiwxLjItNC42LDIuNC02LDEuNC0xLjQsMy4xLTIuMiw1LjMtMi4yczQuMy43LDUuNSwyLjJjMS4yLDEuNCwxLjksMy40LDEuOSw1Ljh2LjJoLjJaTTY4Miw5NC41YzAtNS0xLjItOS4xLTMuOC0xMnMtNi00LjMtMTAuNS00LjMtOC40LDEuNC0xMS4zLDQuM2MtMi42LDIuOS00LjEsNy00LjEsMTIuMnMxLjQsOS4xLDQuMSwxMiw2LjUsNC4zLDExLjMsNC4zLDUuNS0uNSw3LjktMS43LDQuMS0yLjYsNS41LTQuOGwtMy44LTMuOGMtMS4yLDEuNC0yLjYsMi40LTQuMSwzLjFzLTMuMSwxLTUsMWMtNC44LDAtNy43LTIuNi04LjQtNy43aDIyLjN2LTIuNmgtLjFaTTYxNy4xLDExMC4zaDcuMnYtMTcuMmMwLTIuOS43LTUuMywyLjItN3MzLjYtMi42LDYtMi42LDMuNi43LDQuOCwyLjIsMS43LDMuNiwxLjcsNi4ydjE4LjVoNy4ydi0xOC44YzAtNC4zLTEtNy40LTMuMS05LjhzLTUtMy42LTguNi0zLjYtNC4xLjUtNiwxLjJjLTEuOSwxLTMuMSwxLjktNC4xLDMuNnYtMTkuNGgtNy4zdjQ2LjdoMFpNNTk5LjMsMTExLjFjMi45LDAsNS4zLS41LDcuNC0xLjcsMi4yLTEsMy44LTIuNiw1LTQuNmwtNC4zLTMuOGMtMSwxLjQtMS45LDIuNC0zLjQsMy40LTEuNC43LTIuOSwxLjItNC42LDEuMi0yLjYsMC00LjgtMS02LjItMi45cy0yLjItNC42LTIuMi03LjkuNy02LDIuMi03LjljMS40LTEuOSwzLjYtMi45LDYuMi0yLjlzMy4xLjUsNC42LDEuMmMxLjQuNywyLjQsMS45LDMuNCwzLjRsNC4zLTMuOGMtMS4yLTEuOS0yLjktMy42LTUtNC42LTIuMi0xLTQuNi0xLjctNy40LTEuNy00LjgsMC04LjYsMS40LTExLjMsNC4zLTIuNiwyLjktNC4xLDctNC4xLDEyczEuNCw5LjEsNC4xLDEyLDYuMyw0LjMsMTEuMyw0LjNNNTY2LjUsMTExLjFjMy44LDAsNi43LTEsOS4xLTIuOSwyLjQtMS45LDMuNC00LjMsMy40LTcuNHMtLjctNC4xLTEuOS01LjVjLTEuNC0xLjQtMy44LTIuOS03LjQtNC4xLTEuOS0uNy0zLjEtMS4yLTQuMS0xLjdzLTEuNC0xLTEuOS0xLjRjLS4yLS41LS41LTEtLjUtMS43LDAtMSwuNS0xLjcsMS4yLTIuMnMxLjktLjcsMy4xLS43LDIuNC4yLDMuNi43YzEsLjUsMS45LDEuMiwyLjYsMi4ybDQuMy0zLjFjLTEtMS43LTIuNC0yLjktNC4zLTMuOC0xLjktMS0zLjgtMS40LTYuMi0xLjQtMy40LDAtNi4yLjctOC4yLDIuNC0yLjIsMS43LTMuMSwzLjYtMy4xLDYuMnMuNyw0LjEsMi40LDUuNWMxLjQsMS40LDQuMSwyLjksNy45LDQuMywyLjIsMSwzLjgsMS43LDQuNiwyLjRzMS4yLDEuNCwxLjIsMi40LS41LDIuNC0xLjQsMy4xYy0xLC43LTIuMiwxLjItMy44LDEuMnMtMi42LS4yLTMuOC0xYy0xLjItLjctMi4yLTEuNC0yLjktMi42bC00LjYsMy4xYzEsMS43LDIuMiwzLjEsNC4zLDQuMywxLjYsMS4yLDQsMS43LDYuNCwxLjdNNTQxLjMsMTEwLjNoNy4ydi0zMS42aC03LjJ2MzEuNlpNNTQ1LjEsNzQuNGMxLjQsMCwyLjYtLjUsMy40LTEuMiwxLS43LDEuMi0xLjksMS4yLTMuMXMtLjUtMi40LTEuMi0zLjFjLTEtLjctMS45LTEuMi0zLjQtMS4ycy0yLjYuNS0zLjQsMS4yYy0xLC43LTEuMiwxLjktMS4yLDMuMXMuNSwyLjQsMS4yLDMuMWMuOC45LDIsMS4yLDMuNCwxLjJNNTI4LjgsMTExLjFjMi45LDAsNS0uNyw3LTEuOWwtMS00LjFjLTEuMi41LTIuNC43LTMuNi43cy0xLjktLjItMi40LS43LS43LTEuMi0uNy0yLjR2LTM5LjRoLTcuMnYzOS40YzAsMi42LjcsNC44LDEuOSw2LjIsMS43LDEuNCwzLjYsMi4yLDYsMi4yTTUwNy41LDkyLjFoLTE1LjNjLjItMi42LDEuMi00LjYsMi40LTYsMS40LTEuNCwzLjEtMi4yLDUuMy0yLjJzNC4zLjcsNS41LDIuMmMxLjQsMS41LDEuOSwzLjQsMi4xLDZoMFpNNTE0LjUsOTQuNWMwLTUtMS4yLTkuMS0zLjgtMTJzLTYtNC4zLTEwLjUtNC4zLTguNCwxLjQtMTEuMyw0LjNjLTIuNiwyLjktNC4xLDctNC4xLDEyLjJzMS40LDkuMSw0LjEsMTJjMi42LDIuOSw2LjUsNC4zLDExLjMsNC4zczUuNS0uNSw3LjktMS43LDQuMS0yLjYsNS41LTQuOGwtMy44LTMuOGMtMS4yLDEuNC0yLjYsMi40LTQuMSwzLjEtMS40LjctMy4xLDEtNSwxLTQuOCwwLTcuNy0yLjYtOC40LTcuN2gyMi4zdi0yLjZoMFpNNDcwLjgsOTYuOWMwLDIuNi0uNyw0LjYtMS45LDYtMS4yLDEuNC0zLjEsMi4yLTUuNSwyLjJzLTQuMy0xLTUuOC0yLjljLTEuNC0xLjktMS45LTQuNi0xLjktNy45cy43LTYuMiwyLjItNy45YzEuNC0xLjksMy40LTIuOSw1LjgtMi45czQuMS43LDUuNSwyLjRjMS4yLDEuNywxLjksMy44LDEuOSw2LjdsLS4zLDQuM2gwWk00NzIuMyw3OC43bC0uNSw0LjFoLS4yYy0xLTEuNy0yLjQtMi42LTMuOC0zLjYtMS43LS43LTMuNi0xLjItNS44LTEuMi00LjEsMC03LjQsMS40LTkuOCw0LjNzLTMuNiw2LjctMy42LDExLjcsMS4yLDkuNCwzLjYsMTIuMiw1LjgsNC4zLDEwLjEsNC4zLDMuOC0uMiw1LjUtMWMxLjctLjcsMi45LTEuNywzLjYtMy4xdjEuN2MwLDcuNC0yLjksMTEuMy04LjksMTEuM3MtMy4xLS4yLTQuOC0uN2MtMS43LS41LTMuNC0xLTQuOC0xLjdsLTIuNCw1YzEuNywxLDMuNiwxLjksNS41LDIuNCwyLjIuNSw0LjMuNyw2LjcuNyw1LDAsOC45LTEuNCwxMS41LTQuMSwyLjYtMi42LDMuOC02LjcsMy44LTEydi0zMC4zaC01LjdaTTQxMy41LDExMC4zaDcuMnYtMTcuMmMwLTIuNi43LTQuOCwyLjQtNi43LDEuNC0xLjcsMy42LTIuNiw2LTIuNnMzLjYuNyw0LjYsMi4yYzEsMS40LDEuNCwzLjYsMS40LDYuNXYxOGg3LjJ2LTE3LjljMC00LjgtMS04LjQtMi45LTEwLjhzLTQuNi0zLjYtOC40LTMuNi00LjYuNS02LjUsMS43LTMuNCwyLjYtNC4xLDQuNmgtLjJjMC0xLjcsMC0zLjYtLjItNS41aC02LjdjLjIsMS43LjIsNC4zLjIsOC4ydjIzLjFaTTM5MC41LDEwNS41Yy0xLjcsMC0yLjktLjUtMy44LTEuMi0xLS43LTEuNC0xLjktMS40LTMuNHMuNy0yLjksMS45LTMuOGMxLjItMSwzLjEtMS40LDUuMy0xLjRoNS44djMuNmMwLDEuNy0uNywzLjEtMi4yLDQuMy0xLjUsMS41LTMuNCwxLjktNS42LDEuOU0zODkuMSwxMTEuMWM0LjEsMCw3LjQtMS40LDkuOC00LjZoLjJjLjIsMS43LjUsMy4xLjcsNC4xaDYuNWMtLjItMS0uNS0yLjItLjUtMy40LS4yLTEuMi0uMi0yLjQtLjItMy4xdi0xNC45YzAtMy42LTEuMi02LjItMy42LTguMi0yLjQtMS45LTUuNS0yLjktOS42LTIuOXMtNSwuNS03LjIsMS40Yy0yLjIsMS00LjMsMi4yLTUuOCw0LjFsMy40LDQuM2MxLjItMS4yLDIuNC0yLjQsNC4xLTMuMXMzLjQtMSw1LjMtMSwzLjYuNSw0LjYsMS40YzEuMiwxLDEuNywyLjQsMS43LDQuM3YxLjRoLTUuNWMtNC42LDAtOC4yLDEtMTAuNSwyLjYtMi40LDEuNy0zLjgsNC4zLTMuOCw3LjRzLjUsMy42LDEuNCw1YzEsMS40LDIuMiwyLjYsMy44LDMuNiwxLjEsMS4xLDMsMS42LDUuMiwxLjZNMzY3LjUsNzguN2wtNy45LDIzLTcuOS0yM2gtNy40bDEyLjIsMzEuNmg2LjJsMTIuMi0zMS42aC03LjRaTTMxMi44LDExMC4zaDI4LjN2LTYuNWgtMjAuNHYtMTMuNmgxOC4ydi02LjVoLTE4LjJ2LTExLjJoMjAuNHYtNi41aC0yOC4zdjQ0LjNaIj48L3BhdGg+DQogICAgICA8L2c+DQogICAgPC9nPg0KICA8L2c+DQo8L3N2Zz4NCg==" alt="Evangelische Landeskirche in Württemberg"></span>
+    <p class="hk-brand-text">Ev. Verbundkirchengemeinde Dornstetten<br>Vorlage für den Kirchengemeinderat</p>
+  </div>
+</div>
+<header class="elkw-header">
+  <div class="elkw-container elkw-header__inner">
+    <nav class="elkw-nav hk-nav-plain" aria-label="Abschnitte">
+      <ul>
+        <li><a href="#ausgangslage">Ausgangslage</a></li>
+        <li><a href="#randbedingungen">Randbedingungen</a></li>
+        <li><a href="#konzepte">Konzepte</a></li>
+        <li><a href="#jahresplan">Jahresplan</a></li>
+        <li><a href="#vergleich">Vergleich</a></li>
+        <li><a href="#empfehlung">Empfehlung</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="inhalt">
+  <section class="elkw-band--intro elkw-bg-4">
+    <div class="elkw-container">
+      <p class="elkw-band__title"><strong>Heimatkirche 2027: möglichst oft in Aach und möglichst selten am selben Sonntag wie die Junge Kirche.</strong></p>
+      <p>Fünf Wege, die Heimatkirche in den Gottesdienstplan 2027 einzubauen. Alle Randbedingungen und jeder Sonntag des Jahres im Vergleich.</p>
+    </div>
+  </section>
+
+  <!-- 1 Ausgangslage -->
+  <section class="hk-section" id="ausgangslage">
+    <div class="elkw-container">
+      <h2>Ausgangslage</h2>
+      <div class="hk-cols">
+        <div>
+          <p class="hk-lead">Die <strong>Heimatkirche</strong> ist der Gottesdienst für junge Erwachsene vor Ort. Sie beginnt um 10:15&nbsp;Uhr, das Team gestaltet sie selbst, und sie soll ihren Platz in der <strong>Kirche in Aach</strong> haben.</p>
+          <p class="hk-lead">Die <strong>Junge Kirche</strong> der Evangelischen Jugend Pfalzgrafenweiler ist ein ähnliches Format für junge Erwachsene aus der ganzen Region. Sie findet ebenfalls sonntagvormittags statt. Viele Mitarbeitende sind bei beiden dabei. Fallen beide auf denselben Sonntag, fehlen sie einer Seite.</p>
+        </div>
+        <div>
+          <p class="hk-lead"><strong>Warum es klemmt:</strong> Die Junge Kirche feiert alle 14&nbsp;Tage, 2027 fast immer am 2. und 4.&nbsp;Sonntag im Monat. Nach der heutigen Ordnung (Modell&nbsp;1a) ist die Kirche in Aach aber genau an diesen Sonntagen frei. Am 1. und 3.&nbsp;Sonntag ist dort Gemeindegottesdienst.</p>
+          <p class="hk-lead">Wer die Heimatkirche nach Aach legt, legt sie also fast immer neben die Junge Kirche.</p>
+        </div>
+      </div>
+
+      <dl class="elkw-stats" id="hk-stats-intro"></dl>
+
+      <h3>Ein typischer Monat nach der heutigen Ordnung</h3>
+      <div class="elkw-table-wrap">
+        <table class="elkw-table hk-grid">
+          <thead><tr><th scope="col">Sonntag im Monat</th><th scope="col">Junge Kirche</th><th scope="col">Aach</th><th scope="col">Hallwangen</th><th scope="col">Folge für die Heimatkirche</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">1. Sonntag</th><td>–</td><td>9:00 Gottesdienst</td><td class="hk-cell-free">frei</td><td>Aach belegt, nur Hallwangen möglich</td></tr>
+            <tr><th scope="row">2. Sonntag</th><td><span class="elkw-status elkw-status--aktiv">Junge Kirche</span></td><td class="hk-cell-free">frei</td><td>10:15 Gottesdienst</td><td>Aach frei, aber zeitgleich mit der Jungen Kirche</td></tr>
+            <tr><th scope="row">3. Sonntag</th><td>–</td><td>10:15 Gottesdienst</td><td class="hk-cell-free">frei</td><td>Aach belegt, nur Hallwangen möglich</td></tr>
+            <tr><th scope="row">4. Sonntag</th><td><span class="elkw-status elkw-status--aktiv">Junge Kirche</span></td><td class="hk-cell-free">frei</td><td>9:00 Gottesdienst</td><td>Aach frei, aber zeitgleich mit der Jungen Kirche</td></tr>
+            <tr><th scope="row">5. Sonntag</th><td>selten</td><td class="hk-cell-free">frei</td><td class="hk-cell-free">frei</td><td>Aach frei, gibt es aber nur viermal im Jahr</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hk-small">Ausnahme Januar 2027: Nach der Neujahrsfreizeit liegt die Junge Kirche am 17. und 31.&nbsp;Januar, also am 3. und 5.&nbsp;Sonntag. Nach jedem Monat mit fünf Sonntagen verschiebt sich ein 14-Tage-Takt gegenüber einer Monatsregel.</p>
+    </div>
+  </section>
+
+  <!-- 2 Randbedingungen -->
+  <section class="hk-section" id="randbedingungen">
+    <div class="elkw-container">
+      <h2>Randbedingungen</h2>
+      <p class="hk-lead">„Muss“ ist nicht verhandelbar. „Soll“ wird so gut wie möglich erfüllt, und das Erfüllen wird im Vergleich gezählt.</p>
+      <div class="elkw-table-wrap">
+        <table class="elkw-table elkw-table--stack">
+          <thead><tr><th scope="col">Randbedingung</th><th scope="col">Art</th><th scope="col">Erläuterung</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Randbedingung"><strong>Kein zweiter Gottesdienst am Vormittag in derselben Kirche</strong></td><td data-label="Art">Muss</td><td data-label="Erläuterung">Vor- und Nachbereitung brauchen Zeit. Ist um 9:00 Gottesdienst, kann um 10:15 keine Heimatkirche sein. Ein Abendgottesdienst ab 17&nbsp;Uhr stört nicht.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Kein Pfarrer hält zwei Gottesdienste zur selben Zeit</strong></td><td data-label="Art">Muss</td><td data-label="Erläuterung">9:00 an einem Ort und 10:15 am anderen geht, zweimal 10:15 nicht.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Jeder Pfarrer hat im Monat einen predigtfreien Sonntag</strong></td><td data-label="Art">Muss</td><td data-label="Erläuterung">Geprüft für den 1. bis 4.&nbsp;Sonntag nach der Einteilung in der Excel-Tabelle (Süd, Glatten, Nord). Vertretungen durch Prädikanten oder Ruhestandspfarrer sind darin nicht enthalten.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Feste Sondergottesdienste bleiben, wo sie sind</strong></td><td data-label="Art">Muss</td><td data-label="Erläuterung">Diamantene Konfirmation am 14.3. in Aach, Palmsonntag in der Festhalle Hallwangen, Ostern, Pfingsten, Zelttage, Stadtfest, Königskanzel, Erntedank, Ewigkeitssonntag. An gemeinsamen Gottesdiensten (Zelttage, Stadtfest, Königskanzel) gibt es keine eigene Heimatkirche. Die Konfirmanden aus Aach und Hallwangen werden in Dornstetten konfirmiert.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Heimatkirche möglichst in Aach</strong></td><td data-label="Art">Soll</td><td data-label="Erläuterung">Ausweichort ist Hallwangen, Neuneck nur im Notfall.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Heimatkirche möglichst nicht zeitgleich mit der Jungen Kirche</strong></td><td data-label="Art">Soll</td><td data-label="Erläuterung">Drei bis sechs Überschneidungen im Jahr sind vertretbar.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Heimatkirche zweimal im Monat um 10:15</strong></td><td data-label="Art">Soll</td><td data-label="Erläuterung">Pause in den Sommerferien (1.8. bis 12.9.) und zwischen Heiligabend und Epiphanias.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Pfarrer Nord hat eine halbe Stelle</strong></td><td data-label="Art">Soll</td><td data-label="Erläuterung">Laut Excel-Tabelle zwei bis drei Gottesdienste im Monat.</td></tr>
+            <tr><td data-label="Randbedingung"><strong>Taufe und Abendmahl haben bevorzugte Sonntage</strong></td><td data-label="Art">verschiebbar</td><td data-label="Erläuterung">Wandert ein Gottesdienst, wandern Taufe und Abendmahl mit.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="elkw-alert" role="note" style="margin-top:var(--elkw-space-m)"><span class="elkw-alert__title">Annahmen:</span>
+        <ul>
+          <li>Termine der Jungen Kirche bis Juli 2027 stammen aus dem EJP-Kalender 2026/27. Ab September 2027 ist angenommen: immer am 2. und 4.&nbsp;Sonntag. Diese Termine sind im Jahresplan markiert.</li>
+          <li>Die Heimatkirche braucht keinen Pfarrer, es zählt nur, ob die Kirche frei ist.</li>
+          <li>Die Heimatkirche-Termine 2027, die schon in ChurchTools stehen, gelten als vorläufig. Sie erscheinen im Vergleich als „Bisher“.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 Konzepte -->
+  <section class="hk-section" id="konzepte">
+    <div class="elkw-container">
+      <h2>Die fünf Konzepte</h2>
+      <p class="hk-lead">A und B lassen den Gottesdienstplan, wie er ist. C, D und E machen die Kirche in Aach am 1. und 3.&nbsp;Sonntag frei. Für die Heimatkirche wirken C, D und E fast gleich. Sie unterscheiden sich darin, was sich für die anderen Gemeinden und für die Pfarrer ändert. Modell&nbsp;1b (einmal Aach, einmal Hallwangen im Monat) liegt zwischen A und B und wird nicht eigens gezeigt.</p>
+      <ul class="elkw-tabs" role="tablist" id="hk-tabs"></ul>
+      <div id="hk-panels"></div>
+    </div>
+  </section>
+
+  <!-- 4 Jahresplan -->
+  <section class="hk-section" id="jahresplan">
+    <div class="elkw-container">
+      <h2>Jahresplan 2027</h2>
+      <p class="hk-lead">Jeder Sonntag des Jahres: Wo wäre die Heimatkirche in welchem Konzept? Rot markiert ist, wo sie zeitgleich mit der Jungen Kirche läge.</p>
+      <div class="elkw-toolbar hk-toolbar">
+        <fieldset>
+          <legend>Konzepte anzeigen</legend>
+          <div class="hk-checks" id="hk-colchecks"></div>
+        </fieldset>
+        <div>
+          <p class="hk-small" style="margin:0 0 0.25rem" id="hk-filter-label">Sonntage</p>
+          <ul class="elkw-segments" aria-labelledby="hk-filter-label" id="hk-filter">
+            <li><button type="button" aria-pressed="true" value="alle">Alle</button></li>
+            <li><button type="button" aria-pressed="false" value="jk">Mit Junger Kirche</button></li>
+            <li><button type="button" aria-pressed="false" value="diff">Nur Unterschiede</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="elkw-table-wrap hk-plan-wrap" tabindex="0" aria-label="Jahresplan, horizontal scrollbar">
+        <table class="elkw-table hk-plan" id="hk-plan"></table>
+      </div>
+      <ul class="hk-legend">
+        <li><span class="elkw-status elkw-status--aktiv">Aach</span></li>
+        <li><span class="elkw-status elkw-status--offen">Hallwangen</span></li>
+        <li><span class="elkw-status elkw-status--fehler">zeitgleich mit Junger Kirche</span></li>
+        <li>„Ersatz“ = verlegt, weil der Regel-Sonntag nicht ging</li>
+        <li>„JK*“ = Termin der Jungen Kirche angenommen</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 Vergleich -->
+  <section class="hk-section" id="vergleich">
+    <div class="elkw-container">
+      <h2>Vergleich auf einen Blick</h2>
+      <div class="elkw-table-wrap">
+        <table class="elkw-table hk-compare" id="hk-compare"></table>
+      </div>
+      <p class="hk-small">Gezählt sind die Sonntage 2027 ohne die Pausen. Sondertermine mit der Heimatkirche (Zelttage-Auftakt 6.6., Erntedank Aach 3.10.) zählen mit.</p>
+    </div>
+  </section>
+
+  <!-- 6 Empfehlung -->
+  <section class="hk-section" id="empfehlung">
+    <div class="elkw-container">
+      <h2>Empfehlung und offene Fragen</h2>
+      <div class="elkw-grid-main">
+        <div class="elkw-infobox">
+          <p class="elkw-infobox__title"><strong>Vorschlag zur Diskussion: Konzept E „Aach früh“</strong></p>
+          <p>Es ist das einzige Konzept, das alle Muss-Bedingungen erfüllt und die Heimatkirche fast immer nach Aach bringt:</p>
+          <ul>
+            <li>19 Heimatkirchen, alle in Aach, nur eine Überschneidung mit der Jungen Kirche (17.&nbsp;Januar).</li>
+            <li>Jeder der drei Pfarrer hat im Monat einen predigtfreien Sonntag.</li>
+            <li>Glatten, Neuneck, Böffingen, Hallwangen und Dornstetten behalten ihre Gottesdienstzeiten.</li>
+          </ul>
+          <p>Der Preis: Aach feiert seinen Gemeindegottesdienst immer um 9:00. Um 10:15 ist in Aach dann die Heimatkirche, die allen offensteht.</p>
+          <p><strong>Ausweichlösung:</strong> Will Aach die 10:15-Zeit behalten, ist D die nächstbeste Wahl. Dafür muss sich der Rhythmus aller Orte verschieben, und das muss mit Glatten abgestimmt werden.</p>
+        </div>
+        <div class="elkw-panel">
+          <p class="elkw-panel__title"><strong>Zu klären</strong></p>
+          <ul class="hk-procon">
+            <li>Ist Aach mit 9:00 an beiden Sonntagen einverstanden?</li>
+            <li>Taufen in Aach: um 9:00 oder in der Heimatkirche um 10:15? Am 3.&nbsp;Sonntag wäre Pfarrer Süd frei.</li>
+            <li>Gottesdienst mit dem Chor der Martinskirche am 21.2.: In C, D und E muss er auf einen anderen Aacher Sonntag.</li>
+            <li>Pfarrer Nord hätte in E drei Sonntage im Monat. Passt das zur halben Stelle?</li>
+            <li>Termine der Jungen Kirche ab September 2027 bei der EJP bestätigen lassen.</li>
+            <li>Die fünften Sonntage (30.5., 31.10.) könnten zusätzliche Heimatkirchen in Aach werden.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hk-src" style="margin-top:var(--elkw-space-l)">Quellen: Entwurf Gottesdienstordnung (Excel, 25.9.2026), Kalender 2026/27 der Evangelischen Jugend Pfalzgrafenweiler, Gottesdienstkalender in ChurchTools (Stand 17.10.2026).</p>
+    </div>
+  </section>
+</main>
+
+<footer class="elkw-footer">
+  <div class="elkw-footer__main"><div class="elkw-container"><p>Ev. Verbundkirchengemeinde Dornstetten · Heimatkirche Jahresplan 2027 · Arbeitsstand für die Beratung im Kirchengemeinderat</p></div></div>
+</footer>
+</div>
+
+<script>
+const DATA = {"days": [{"d": "2027-01-03", "n": 1, "kj": "2. So. nach Christfest", "jk": "Neujahrsfreizeit der JK", "jkAss": false, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-01-10", "n": 2, "kj": "1. So. nach Epiphanias", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-01-17", "n": 3, "kj": "letzter So. nach Epiphanias", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-01-24", "n": 4, "kj": "Septuagesimä", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-01-31", "n": 5, "kj": "Sexagesimä", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": null}, "B": {"Aach": null, "Hw": null}, "C": {"Aach": null, "Hw": null}, "D": {"Aach": null, "Hw": null}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-02-07", "n": 1, "kj": "Estomihi", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-02-14", "n": 2, "kj": "Invocavit", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-02-21", "n": 3, "kj": "Reminiszere", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Aach 10:15 mit Chor der Martinskirche", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-02-28", "n": 4, "kj": "Okuli", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-03-07", "n": 1, "kj": "Lätare", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-03-14", "n": 2, "kj": "Judika", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Aach: Diamantene Konfirmation (fix)", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-03-21", "n": 3, "kj": "Palmarum / Palmsonntag", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Palmsonntag: Gemeinschaftsfest der Apis, Festhalle Hallwangen", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-03-28", "n": 4, "kj": "Ostersonntag", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Ostern: Aach 9:00 Auferstehungsfeier, Hallwangen 7:00 und 10:15", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-04-04", "n": 1, "kj": "Quasimodogeniti", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-04-11", "n": 2, "kj": "Misericordias Domini", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-04-18", "n": 3, "kj": "Jubilate", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-04-25", "n": 4, "kj": "Kantate", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Konfirmation Dornstetten, Gruppe 1", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-05-02", "n": 1, "kj": "Rogate", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Konfirmation Dornstetten, Gruppe 2", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-05-09", "n": 2, "kj": "Exaudi", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-05-16", "n": 3, "kj": "Pfingstsonntag", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Pfingsten: Hallwangen 9:00, Aach 10:15", "busy": {"A": {"Aach": null, "Hw": null}, "B": {"Aach": null, "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-05-23", "n": 4, "kj": "Trinitatis", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-05-30", "n": 5, "kj": "1. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": null}, "B": {"Aach": null, "Hw": null}, "C": {"Aach": null, "Hw": null}, "D": {"Aach": null, "Hw": null}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-06-06", "n": 1, "kj": "2. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "Auftakt Zelttage: gemeinsamer Gottesdienst mit Heimatkirche", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-06-13", "n": 2, "kj": "3. So. n. Trinitatis", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "Zelttage: gemeinsamer Familiengottesdienst", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-06-20", "n": 3, "kj": "4. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": false, "joint": "Zelttage: gemeinsamer Gottesdienst", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-06-27", "n": 4, "kj": "5. So. n. Trinitatis", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-07-04", "n": 1, "kj": "6. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-07-11", "n": 2, "kj": "7. So. n. Trinitatis", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "Stadtfest: ökumenischer Gottesdienst", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-07-18", "n": 3, "kj": "8. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-07-25", "n": 4, "kj": "9. So. n. Trinitatis", "jk": "Junge Kirche", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-08-01", "n": 1, "kj": "10. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-08-08", "n": 2, "kj": "11. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-08-15", "n": 3, "kj": "12. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-08-22", "n": 4, "kj": "13. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-08-29", "n": 5, "kj": "14. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": null}, "B": {"Aach": null, "Hw": null}, "C": {"Aach": null, "Hw": null}, "D": {"Aach": null, "Hw": null}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-09-05", "n": 1, "kj": "15. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-09-12", "n": 2, "kj": "16. So. n. Trinitatis", "jk": "Junge Kirche", "jkAss": true, "pause": false, "joint": "Gemeinsamer Gottesdienst Königskanzel", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-09-19", "n": 3, "kj": "17. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-09-26", "n": 4, "kj": "18. So n. Trinitatis", "jk": "Junge Kirche", "jkAss": true, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-10-03", "n": 1, "kj": "Erntedank", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "Erntedank in Aach mit Heimatkirche und Kindergarten", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-10-10", "n": 2, "kj": "20. So. n. Trinitatis", "jk": "Junge Kirche", "jkAss": true, "pause": false, "joint": "", "fix": "", "ev": "Erntedank Hallwangen 10:15", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-10-17", "n": 3, "kj": "21. So. n. Trinitatis", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-10-24", "n": 4, "kj": "22. So. n. Trinitatis", "jk": "Junge Kirche", "jkAss": true, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-10-31", "n": 5, "kj": "Reformationsfest", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Reformationsfest", "busy": {"A": {"Aach": null, "Hw": null}, "B": {"Aach": null, "Hw": null}, "C": {"Aach": null, "Hw": null}, "D": {"Aach": null, "Hw": null}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-11-07", "n": 1, "kj": "Drittl.S.d.Kj.", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-11-14", "n": 2, "kj": "Vorletzter Sonntag d. Kj.", "jk": "Junge Kirche", "jkAss": true, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-11-21", "n": 3, "kj": "Ewigkeitssonntag", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "Ewigkeitssonntag: Hallwangen 9:00, Aach 17:30", "busy": {"A": {"Aach": null, "Hw": null}, "B": {"Aach": null, "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-11-28", "n": 4, "kj": "1. Advent", "jk": "Junge Kirche", "jkAss": true, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}, {"d": "2027-12-05", "n": 1, "kj": "2. Advent", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "9:00", "Hw": null}, "B": {"Aach": "9:00", "Hw": null}, "C": {"Aach": null, "Hw": "10:15"}, "D": {"Aach": null, "Hw": "9:00"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-12-12", "n": 2, "kj": "3. Advent", "jk": "Junge Kirche", "jkAss": true, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "10:15"}, "B": {"Aach": null, "Hw": "10:15"}, "C": {"Aach": "9:00", "Hw": null}, "D": {"Aach": "9:00", "Hw": null}, "E": {"Aach": "9:00", "Hw": "10:15"}}}, {"d": "2027-12-19", "n": 3, "kj": "4. Advent", "jk": "", "jkAss": false, "pause": false, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": "10:15", "Hw": null}, "B": {"Aach": "10:15", "Hw": null}, "C": {"Aach": null, "Hw": "9:00"}, "D": {"Aach": null, "Hw": "10:15"}, "E": {"Aach": null, "Hw": null}}}, {"d": "2027-12-26", "n": 4, "kj": "1. So. n. Christfest", "jk": "Junge Kirche", "jkAss": true, "pause": true, "joint": "", "fix": "", "ev": "", "busy": {"A": {"Aach": null, "Hw": "9:00"}, "B": {"Aach": null, "Hw": "9:00"}, "C": {"Aach": "10:15", "Hw": null}, "D": {"Aach": "10:15", "Hw": null}, "E": {"Aach": "9:00", "Hw": "9:00"}}}], "res": {"A": {"2027-01-10": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-01-24": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-02-14": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-02-28": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-03-07": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-03-14"}, "2027-04-11": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-04-25": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-05-09": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-05-23": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-06-06": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-06-27": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-07-04": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-07-11"}, "2027-07-25": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-09-19": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-09-12"}, "2027-09-26": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-10-03": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-10-10": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-10-24": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-11-14": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-11-28": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-12-12": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-12-19": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-12-26"}}, "B": {"2027-01-10": {"loc": "Aach", "kind": "ersatz", "jk": false, "for": "2027-01-03"}, "2027-01-24": {"loc": "Aach", "kind": "ersatz", "jk": false, "for": "2027-01-17"}, "2027-02-07": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-02-21": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-03-07": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-04-04": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-04-18": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-05-02": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-05-16": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-06-06": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-07-04": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-07-18": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-09-19": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-10-03": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-10-17": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-11-07": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-11-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-12-05": {"loc": "Hw", "kind": "regel", "jk": false}, "2027-12-19": {"loc": "Hw", "kind": "regel", "jk": false}}, "C": {"2027-01-10": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-01-03"}, "2027-01-24": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-01-17"}, "2027-02-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-02-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-03-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-03-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-04-04": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-04-18": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-05-02": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-05-16": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-06-06": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-07-04": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-07-18": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-09-19": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-10-03": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-10-17": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-11-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-11-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-12-05": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-12-19": {"loc": "Aach", "kind": "regel", "jk": false}}, "D": {"2027-01-10": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-01-03"}, "2027-01-24": {"loc": "Hw", "kind": "ersatz", "jk": false, "for": "2027-01-17"}, "2027-02-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-02-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-03-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-03-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-04-04": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-04-18": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-05-02": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-05-16": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-06-06": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-07-04": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-07-18": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-09-19": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-10-03": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-10-17": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-11-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-11-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-12-05": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-12-19": {"loc": "Aach", "kind": "regel", "jk": false}}, "E": {"2027-01-17": {"loc": "Aach", "kind": "regel", "jk": true}, "2027-02-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-02-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-03-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-03-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-04-04": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-04-18": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-05-02": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-05-16": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-06-06": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-07-04": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-07-18": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-09-19": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-10-03": {"loc": "Aach", "kind": "fix", "jk": false}, "2027-10-17": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-11-07": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-11-21": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-12-05": {"loc": "Aach", "kind": "regel", "jk": false}, "2027-12-19": {"loc": "Aach", "kind": "regel", "jk": false}}, "IST": {"2027-01-10": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-01-24": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-02-07": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-02-21": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-03-07": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-03-21": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-04-04": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-04-18": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-05-02": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-05-16": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-05-30": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-06-06": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-07-04": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-07-18": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-09-19": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-10-03": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-10-17": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-10-31": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-11-07": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-11-21": {"loc": "Aach", "kind": "ct", "jk": false}, "2027-12-05": {"loc": "Hw", "kind": "ct", "jk": false}, "2027-12-19": {"loc": "Hw", "kind": "ct", "jk": false}}}, "stats": {"A": {"total": 22, "aach": 18, "hw": 4, "jk": 14, "ersatz": 4, "entfallen": ["2027-03-28", "2027-06-13"]}, "B": {"total": 19, "aach": 6, "hw": 13, "jk": 0, "ersatz": 2, "entfallen": ["2027-03-21", "2027-06-20"]}, "C": {"total": 20, "aach": 18, "hw": 2, "jk": 0, "ersatz": 2, "entfallen": ["2027-06-20"]}, "D": {"total": 20, "aach": 18, "hw": 2, "jk": 0, "ersatz": 2, "entfallen": ["2027-06-20"]}, "E": {"total": 19, "aach": 19, "hw": 0, "jk": 1, "ersatz": 0, "entfallen": ["2027-06-20"]}, "IST": {"total": 22, "aach": 9, "hw": 13, "jk": 0, "ersatz": 0, "entfallen": []}}};
+const MON = ['Jan.','Feb.','März','Apr.','Mai','Juni','Juli','Aug.','Sept.','Okt.','Nov.','Dez.'];
+const MONL = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const PF = {S:'Süd', G:'Glatten', N:'Nord'};
+const ORTE = [['Do','Dornstetten'],['Gla','Glatten'],['Aach','Aach'],['Hw','Hallwangen'],['Bo','Böffingen'],['Neu','Neuneck']];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = iso => { const [y,m,d] = iso.split('-').map(Number); return `${d}. ${MON[m-1]}`; };
+
+/* Monatsraster je Modell: Zeile = n-ter Sonntag; Zelle {t: Zeit, p: Pfarrer, ta: Taufe/Abendmahl bevorzugt} */
+const g = (t,p,ta) => ({t,p,ta:!!ta});
+const R1A = {
+  1:{Do:g('10:15','S'),Gla:g('9:00','G'),Aach:g('9:00','S'),Neu:g('10:15','G',1)},
+  2:{Do:g('10:15','S',1),Gla:g('10:15','G',1),Hw:g('10:15','N',1),Bo:g('9:00','N')},
+  3:{Do:g('10:15','G'),Gla:g('9:00','G'),Aach:g('10:15','S',1)},
+  4:{Do:g('10:15','N'),Gla:g('10:15','S'),Hw:g('9:00','N'),Bo:g('10:15','G',1)},
+  5:{Do:g('10:15','S',1),Gla:g('9:00','G')}
+};
+const GRIDS = {
+  A: {rows:R1A, hk:{2:'Aach',4:'Aach'}},
+  B: {rows:R1A, hk:{1:'Hw',3:'Hw'}},
+  C: {rows:{
+    1:{Do:g('10:15','S',1),Gla:g('9:00','G'),Hw:g('10:15','N',1),Neu:g('10:15','G')},
+    2:{Do:g('10:15','G'),Gla:g('9:00','G'),Aach:g('9:00','S'),Bo:g('9:00','N')},
+    3:{Do:g('10:15','N'),Gla:g('9:00','S'),Hw:g('9:00','N')},
+    4:{Do:g('10:15','S'),Gla:g('9:00','G'),Aach:g('10:15','S',1),Bo:g('10:15','G')},
+    5:{Do:g('10:15','S'),Gla:g('9:00','G')}}, hk:{1:'Aach',3:'Aach'}},
+  D: {rows:{1:R1A[4],2:R1A[1],3:R1A[2],4:R1A[3],5:R1A[5]}, hk:{1:'Aach',3:'Aach'}},
+  E: {rows:{
+    1:{Do:g('10:15','S'),Gla:g('9:00','G'),Neu:g('10:15','G',1)},
+    2:{Do:g('10:15','S',1),Gla:g('10:15','G',1),Aach:g('9:00','S',1),Hw:g('10:15','N',1),Bo:g('9:00','G')},
+    3:{Do:g('10:15','N'),Gla:g('9:00','N')},
+    4:{Do:g('10:15','N'),Gla:g('10:15','S'),Aach:g('9:00','S'),Hw:g('9:00','N'),Bo:g('10:15','G',1)},
+    5:{Do:g('10:15','S',1),Gla:g('9:00','G')}}, hk:{1:'Aach',3:'Aach'}}
+};
+const MODELS = {
+  A:{kurz:'A · Aach fest', name:'A „Aach fest“', quelle:'Modell 1a',
+     text:'Die Heimatkirche feiert immer am 2. und 4. Sonntag in Aach. Am übrigen Gottesdienstplan ändert sich nichts.',
+     pro:['Fast immer in Aach','Keine Änderung für andere Gemeinden'],
+     contra:['Fast jedes Mal zeitgleich mit der Jungen Kirche','Pfarrer Süd und Glatten ohne predigtfreien Sonntag (wie in 1a)']},
+  B:{kurz:'B · Ausweichen', name:'B „Ausweichen nach Hallwangen“', quelle:'Modell 1a, Variante Hallwangen',
+     text:'Die Heimatkirche feiert am 1. und 3. Sonntag in Hallwangen, in Aach nur, wenn die Kirche dort frei ist. Das entspricht weitgehend dem heutigen Stand in ChurchTools.',
+     pro:['Keine Überschneidung mit der Jungen Kirche','Keine Änderung für andere Gemeinden'],
+     contra:['Meist in Hallwangen statt in Aach','Pfarrer Süd und Glatten ohne predigtfreien Sonntag (wie in 1a)']},
+  C:{kurz:'C · Aach tauscht', name:'C „Aach tauscht“', quelle:'Modell 2',
+     text:'Der Aacher Gemeindegottesdienst wandert auf den 2. und 4. Sonntag, Hallwangen auf den 1. und 3. Glatten feiert am 2. und 4. Sonntag um 9:00 (Ausweichzeiten aus der Excel-Tabelle).',
+     pro:['Heimatkirche fast immer in Aach','Keine Überschneidung mit der Jungen Kirche'],
+     contra:['Pfarrer Süd am 4. Sonntag zweimal um 10:15 eingeteilt (Dornstetten und Aach)','Pfarrer Süd ohne predigtfreien Sonntag','Hallwangen und Glatten ändern ihre Zeiten']},
+  D:{kurz:'D · 1a verschoben', name:'D „1a eine Woche später“', quelle:'Vorschlag aus der Rückfrage',
+     text:'Alle Zeilen von Modell 1a rutschen um eine Woche: Was bisher am 1. Sonntag war, ist jetzt am 2. usw.; der 4. Sonntag wird zum 1. Jede Zeile bleibt in sich stimmig.',
+     pro:['Heimatkirche fast immer in Aach','Keine Überschneidung mit der Jungen Kirche','Keine neue Doppelbelegung der Pfarrer'],
+     contra:['Alle Orte verschieben ihre Sonntage, auch Glatten, Neuneck und Böffingen (Abstimmung mit Glatten nötig)','Pfarrer Süd und Glatten weiterhin ohne predigtfreien Sonntag']},
+  E:{kurz:'E · Aach früh', name:'E „Aach früh“', quelle:'neue Variante',
+     text:'Aach feiert seinen Gemeindegottesdienst am 2. und 4. Sonntag, beide Male um 9:00 (Pfarrer Süd, danach 10:15 in Dornstetten bzw. Glatten). Böffingen am 2. Sonntag übernimmt Pfarrer Glatten. Am 3. Sonntag übernimmt Pfarrer Nord Glatten und Dornstetten. Alle übrigen Zeiten bleiben wie in 1a.',
+     pro:['Heimatkirche immer in Aach','Nur eine Überschneidung mit der Jungen Kirche','Jeder Pfarrer hat einen predigtfreien Sonntag','Glatten, Neuneck, Böffingen und Hallwangen behalten ihre Zeiten'],
+     contra:['Aach hat keinen eigenen 10:15-Gottesdienst mehr','Taufen in Aach um 9:00 oder in der Heimatkirche','Pfarrer Nord hat drei Sonntage im Monat']}
+};
+const KEYS = ['A','B','C','D','E'];
+
+/* Pfarrer-Prüfung: Doppelbelegung, Einsatz-Sonntage, predigtfreier Sonntag (1.–4. Sonntag) */
+function check(key){
+  const rows = GRIDS[key].rows, res = {};
+  for (const p of ['S','G','N']) res[p] = {sonntage:0, gd:0, frei:[], doppelt:[]};
+  for (let n=1;n<=4;n++){
+    const byP = {S:[],G:[],N:[]};
+    for (const [k] of ORTE){ const c = rows[n][k]; if (c) byP[c.p].push(c.t); }
+    for (const p of ['S','G','N']){
+      const ts = byP[p];
+      if (ts.length){ res[p].sonntage++; res[p].gd += ts.length; } else res[p].frei.push(n);
+      if (new Set(ts).size < ts.length) res[p].doppelt.push(n);
+    }
+  }
+  return res;
+}
+/* Was ändert sich gegenüber 1a? Zeiten je Ort und Pfarrer-Einteilung */
+function changes(key){
+  const rows = GRIDS[key].rows, out = [];
+  for (const [k,name] of ORTE){
+    if (k==='Aach' || k==='Hw') {}
+    const a = [], b = [];
+    for (let n=1;n<=5;n++){ if (R1A[n][k]) a.push(`${n}. So ${R1A[n][k].t}`); if (rows[n][k]) b.push(`${n}. So ${rows[n][k].t}`); }
+    if (a.join()!==b.join()) out.push({ort:name, alt:a.join(', '), neu:b.join(', ')});
+  }
+  return out;
+}
+function pfChanges(key){
+  const rows = GRIDS[key].rows; let c = 0;
+  for (let n=1;n<=5;n++) for (const [k] of ORTE){ const x=R1A[n][k], y=rows[n][k]; if (x&&y&&x.t===y.t&&x.p!==y.p) c++; }
+  return c;
+}
+
+/* ---------- Kennzahlen Ausgangslage ---------- */
+document.getElementById('hk-stats-intro').innerHTML = [
+  ['Takt der Jungen Kirche','14 Tage'],
+  ['Sonntage 2027 ohne Pausen','46'],
+  ['davon Aach frei und keine Junge Kirche (heutige Ordnung)','8'],
+  ['Heimatkirchen bisher in ChurchTools', `${DATA.stats.IST.total} <small>davon ${DATA.stats.IST.aach} in Aach</small>`]
+].map(([t,v])=>`<div><dt>${t}</dt><dd>${v}</dd></div>`).join('');
+
+/* ---------- Reiter und Monatsraster ---------- */
+const tabs = document.getElementById('hk-tabs'), panels = document.getElementById('hk-panels');
+tabs.innerHTML = KEYS.map((k,i)=>`<li><button role="tab" id="hk-t-${k}" aria-controls="hk-p-${k}" aria-selected="${k==='E'}">${esc(MODELS[k].kurz)}</button></li>`).join('');
+panels.innerHTML = KEYS.map(k=>{
+  const M = MODELS[k], G = GRIDS[k], S = DATA.stats[k], chk = check(k), chg = changes(k), pc = pfChanges(k);
+  let grid = '<thead><tr><th scope="col">Sonntag</th>'+ORTE.map(o=>`<th scope="col">${o[1]}</th>`).join('')+'</tr></thead><tbody>';
+  for (let n=1;n<=5;n++){
+    grid += `<tr><th scope="row">${n}. Sonntag</th>`;
+    for (const [o] of ORTE){
+      const c = G.rows[n][o], base = R1A[n][o];
+      const hk = (G.hk[n]===o) || (n===5 && o==='Aach');
+      if (c){
+        const changed = !base || base.t!==c.t || base.p!==c.p;
+        grid += `<td class="${changed?'hk-cell-chg':''}">${c.t} · ${PF[c.p]}${c.ta?'<span class="hk-tag">Taufe/Abendmahl</span>':''}${changed?'<span class="hk-tag">geändert</span>':''}</td>`;
+      } else if (hk){
+        grid += `<td class="hk-cell-hk">Heimatkirche 10:15${n===5?'<span class="hk-tag">möglich</span>':''}</td>`;
+      } else grid += '<td class="hk-cell-free">–</td>';
+    }
+    grid += '</tr>';
+  }
+  grid += '</tbody>';
+  const pfRows = ['S','G','N'].map(p=>{
+    const r = chk[p];
+    const frei = r.frei.length ? `<span class="elkw-status elkw-status--erfolg">ja, ${r.frei.map(n=>n+'.').join(' und ')} Sonntag</span>` : '<span class="elkw-status elkw-status--fehler">nein</span>';
+    const dop = r.doppelt.length ? `<span class="elkw-status elkw-status--fehler">${r.doppelt.map(n=>n+'.').join(', ')} Sonntag</span>` : '<span class="elkw-status elkw-status--erfolg">keine</span>';
+    return `<tr><th scope="row">Pfarrer ${PF[p]}</th><td class="num">${r.sonntage} von 4</td><td class="num">${r.gd}</td><td>${frei}</td><td>${dop}</td></tr>`;
+  }).join('');
+  const chgList = chg.length ? '<ul class="hk-procon">'+chg.map(c=>`<li><strong>${c.ort}:</strong> bisher ${c.alt || 'kein Gottesdienst'}; neu ${c.neu || 'kein Gottesdienst'}</li>`).join('')+'</ul>' : '<p>Keine Zeiten ändern sich.</p>';
+  return `<div id="hk-p-${k}" role="tabpanel" aria-labelledby="hk-t-${k}" class="hk-panel-body" ${k==='E'?'':'hidden'}>
+    <div class="hk-kicker-row"><h3 style="margin:0">${esc(M.name)}</h3><span class="elkw-kicker">${esc(M.quelle)}</span></div>
+    <p class="hk-lead">${esc(M.text)}</p>
+    <dl class="elkw-stats">
+      <div><dt>Heimatkirchen 2027</dt><dd>${S.total}</dd></div>
+      <div><dt>davon in Aach</dt><dd>${S.aach}</dd></div>
+      <div><dt>davon in Hallwangen</dt><dd>${S.hw}</dd></div>
+      <div><dt>zeitgleich mit Junger Kirche</dt><dd>${S.jk}</dd></div>
+    </dl>
+    <div class="hk-cols">
+      <div><p><strong>Dafür spricht</strong></p><ul class="hk-procon">${M.pro.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div><p><strong>Dagegen spricht</strong></p><ul class="hk-procon">${M.contra.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+    </div>
+    <h4>So sieht ein Monat aus</h4>
+    <div class="elkw-table-wrap"><table class="elkw-table hk-grid">${grid}</table></div>
+    <ul class="hk-legend"><li><span class="hk-swatch hk-swatch--hk"></span>Heimatkirche</li><li><span class="hk-swatch hk-swatch--chg"></span>geändert gegenüber Modell 1a (Zeit, Sonntag oder Pfarrer)</li><li>Zeit · Pfarrer (Süd, Glatten, Nord)</li></ul>
+    <div class="hk-cols" style="margin-top:var(--elkw-space-m)">
+      <div>
+        <h4>Prüfung der Pfarrer-Einteilung</h4>
+        <div class="elkw-table-wrap"><table class="elkw-table hk-compare">
+          <thead><tr><th scope="col">Pfarrer</th><th scope="col" class="num">Sonntage im Einsatz</th><th scope="col" class="num">Gottesdienste</th><th scope="col">predigtfreier Sonntag</th><th scope="col">Doppelbelegung</th></tr></thead>
+          <tbody>${pfRows}</tbody></table></div>
+        <p class="hk-small">Bezogen auf den 1. bis 4. Sonntag eines Monats.${pc?` Außerdem wechselt bei ${pc} Gottesdienst${pc>1?'en':''} nur der Pfarrer.`:''}</p>
+      </div>
+      <div>
+        <h4>Was ändert sich für die Gemeinden?</h4>
+        ${chgList}
+      </div>
+    </div>
+  </div>`;
+}).join('');
+
+/* ---------- Jahresplan ---------- */
+const COLS = [['IST','Bisher (ChurchTools)'], ...KEYS.map(k=>[k, MODELS[k].kurz])];
+const shown = new Set(['IST',...KEYS]);
+let filter = 'alle';
+document.getElementById('hk-colchecks').innerHTML = COLS.map(([k,l])=>`<label class="elkw-choice"><input type="checkbox" id="hk-col-${k}" value="${k}" checked> ${esc(l)}</label>`).join('');
+document.getElementById('hk-colchecks').addEventListener('change', e=>{ if (e.target.checked) shown.add(e.target.value); else shown.delete(e.target.value); renderPlan(); });
+document.getElementById('hk-filter').addEventListener('elkw:segment', e=>{ filter = e.detail.value; renderPlan(); });
+function cell(k, day){
+  if (day.pause) return '<span class="hk-small">Pause</span>';
+  if (day.joint && !(DATA.res[k]||{})[day.d]) return '<span class="hk-small">gemeinsamer Gottesdienst</span>';
+  const r = (DATA.res[k]||{})[day.d];
+  if (!r){
+    const ent = DATA.stats[k].entfallen.includes(day.d);
+    return ent ? '<span class="hk-small">entfällt</span>' : '–';
+  }
+  let h = r.loc==='Aach' ? '<span class="elkw-status elkw-status--aktiv">Aach</span>' : '<span class="elkw-status elkw-status--offen">Hallwangen</span>';
+  if (r.kind==='ersatz') h += `<span class="hk-tag">Ersatz für ${fmt(r.for)}</span>`;
+  if (r.kind==='fix') h += '<span class="hk-tag">Sondertermin</span>';
+  if (r.jk) h += '<span class="hk-tag"><span class="elkw-status elkw-status--fehler">zeitgleich JK</span></span>';
+  return h;
+}
+function sig(k, day){ const r=(DATA.res[k]||{})[day.d]; return r ? r.loc : '-'; }
+function renderPlan(){
+  const cols = COLS.filter(([k])=>shown.has(k));
+  let h = '<thead><tr><th scope="col" class="hk-sticky">Sonntag</th><th scope="col">Kirchenjahr</th><th scope="col">Junge Kirche</th><th scope="col">Besonderheit</th>'+cols.map(([k,l])=>`<th scope="col">${esc(l)}</th>`).join('')+'</tr></thead><tbody>';
+  let lastM = -1;
+  for (const day of DATA.days){
+    if (filter==='jk' && !day.jk) continue;
+    if (filter==='diff'){ const s = new Set(cols.map(([k])=>sig(k,day))); if (s.size<2 || day.pause) continue; }
+    const m = Number(day.d.slice(5,7))-1;
+    if (m!==lastM){ h += `<tr class="hk-month"><th colspan="${4+cols.length}" scope="colgroup">${MONL[m]}</th></tr>`; lastM = m; }
+    const bes = [day.ev, day.joint, day.fix].filter(Boolean).map(esc).join('<br>');
+    const jk = day.jk ? `<span class="elkw-status elkw-status--aktiv">${day.jk==='Junge Kirche'?'JK':esc(day.jk)}${day.jkAss?'*':''}</span>` : '–';
+    h += `<tr class="${day.pause?'hk-muted':''}"><th scope="row" class="hk-sticky hk-date">${fmt(day.d)}<span class="hk-tag">${day.n}. Sonntag</span></th><td>${esc(day.kj)}</td><td>${jk}</td><td class="hk-small">${bes||''}</td>`+cols.map(([k])=>`<td class="hk-c">${cell(k,day)}</td>`).join('')+'</tr>';
+  }
+  h += '</tbody>';
+  document.getElementById('hk-plan').innerHTML = h;
+}
+renderPlan();
+
+/* ---------- Vergleich ---------- */
+(function(){
+  const cols = [['IST','Bisher'], ...KEYS.map(k=>[k, MODELS[k].kurz])];
+  const pf = k => { if (k==='IST') return {frei:'–',dop:'–'}; const c = check(k); const f = ['S','G','N'].filter(p=>c[p].frei.length).length; const d = ['S','G','N'].filter(p=>c[p].doppelt.length).length; return {frei:`${f} von 3`, dop:String(d)}; };
+  const orte = k => k==='IST' ? '–' : String(changes(k).filter(c=>!['Aach'].includes(c.ort)).length);
+  const rows = [
+    ['Heimatkirchen 2027', k=>DATA.stats[k].total],
+    ['davon in Aach', k=>DATA.stats[k].aach],
+    ['davon in Hallwangen', k=>DATA.stats[k].hw],
+    ['zeitgleich mit der Jungen Kirche', k=>DATA.stats[k].jk],
+    ['Ersatztermine (verlegt)', k=>DATA.stats[k].ersatz],
+    ['Pfarrer mit predigtfreiem Sonntag', k=>pf(k).frei],
+    ['Pfarrer mit Doppelbelegung', k=>pf(k).dop],
+    ['weitere Orte mit geänderten Zeiten (außer Aach)', k=>orte(k)],
+  ];
+  let h = '<thead><tr><th scope="col">Kriterium</th>'+cols.map(([,l])=>`<th scope="col" class="num">${esc(l)}</th>`).join('')+'</tr></thead><tbody>';
+  for (const [label,fn] of rows) h += `<tr><th scope="row">${label}</th>`+cols.map(([k])=>`<td class="num">${fn(k)}</td>`).join('')+'</tr>';
+  document.getElementById('hk-compare').innerHTML = h + '</tbody>';
+})();
+</script>
+<script>
+/* ==========================================================================
+   ELKW Design – Verhalten der Bausteine (optional, ohne Abhängigkeiten)
+   Einbinden am Ende des body: <script src="elkw-behaviors.js"><\/script>
+   Deckt ab: Burger/Toggle, Reiter (Pfeiltasten, Pos1/Ende), Segmente,
+   Dialog/Drawer öffnen und schließen mit Fokusrückgabe.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  // Sprunglink: Fokus auf das Ziel setzen, ohne die Adresse zu ändern (verträgt Hash-Routing)
+  document.querySelectorAll('.elkw-skiplink').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var t = document.getElementById((a.getAttribute('href') || '').replace('#', ''));
+      if (!t) return;
+      e.preventDefault();
+      if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+      t.focus();
+    });
+  });
+
+  // Burger (.elkw-burger) und App-Toggle (.elkw-appbar__toggle): aria-controls → .is-open
+  document.querySelectorAll('.elkw-burger, .elkw-appbar__toggle').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = document.getElementById(b.getAttribute('aria-controls'));
+      if (!t) return;
+      t.classList.toggle('is-open');
+      b.setAttribute('aria-expanded', t.classList.contains('is-open'));
+    });
+  });
+
+  // Reiter (.elkw-tabs[role=tablist] > li > button[role=tab][aria-controls])
+  document.querySelectorAll('.elkw-tabs[role="tablist"]').forEach(function (list) {
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(t, false); });
+      t.addEventListener('keydown', function (e) {
+        var n = null;
+        if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+        if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (e.key === 'Home') n = tabs[0];
+        if (e.key === 'End') n = tabs[tabs.length - 1];
+        if (n) { e.preventDefault(); select(n, true); }
+      });
+    });
+    var current = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0];
+    if (current) select(current, false);
+  });
+
+  // Segmente (.elkw-segments button[aria-pressed]): genau eine Option aktiv
+  document.querySelectorAll('.elkw-segments').forEach(function (group) {
+    group.addEventListener('click', function (e) {
+      var b = e.target.closest('button[aria-pressed]');
+      if (!b) return;
+      group.querySelectorAll('button[aria-pressed]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      group.dispatchEvent(new CustomEvent('elkw:segment', { detail: { value: b.value || b.textContent.trim() } }));
+    });
+  });
+
+  // Dialog und Drawer: [data-open="id"] öffnet per showModal(), [data-close] schließt; Fokus zurück zum Auslöser
+  document.addEventListener('click', function (e) {
+    var opener = e.target.closest('[data-open]');
+    if (opener) {
+      var d = document.getElementById(opener.getAttribute('data-open'));
+      if (d && d.showModal) { d._elkwReturn = opener; d.showModal(); }
+      return;
+    }
+    var closer = e.target.closest('dialog [data-close]');
+    if (closer) closer.closest('dialog').close();
+  });
+  document.querySelectorAll('dialog').forEach(function (d) {
+    d.addEventListener('close', function () {
+      var r = d._elkwReturn;
+      if (r && document.contains(r)) r.focus();
+    });
+  });
+})();
+
+</script>
